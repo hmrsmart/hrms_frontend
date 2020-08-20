@@ -19,30 +19,31 @@ const Timesheet = (props) => {
   console.log(user);
   const appContext = useContext(AppContext);
   const router = useRouter();
-  // useEffect(() => {
-  //   if (!appContext.isAuthenticated) {
-  //     router.push("/login"); // redirect if you're not logged in
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!appContext.isAuthenticated) {
+      router.push("/login"); // redirect if you're not logged in
+    }
+  }, []);
 
   useEffect(() => {
     const token = Cookie.get("token");
-    console.log(token);
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/timesheets?Owner=${user.username}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setTasks(data);
-        console.log(data);
-      });
+    if (token) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/timesheets?Owner=${user.username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setTasks(data);
+          console.log(data);
+        });
+    }
   }, []);
 
   return (

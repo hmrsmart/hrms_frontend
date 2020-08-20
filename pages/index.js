@@ -15,7 +15,9 @@ function Home() {
   return (
     <div className="container-fluid">
       <div className="content-wrapper">
-        <h2 className="px-3 py-4">Welcome, {user && user.username}</h2>
+        <h4 className="px-3 py-4 user-title ml-4">
+          Welcome, {user && user.username}
+        </h4>
       </div>
     </div>
   );

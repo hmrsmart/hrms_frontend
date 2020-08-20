@@ -34,7 +34,7 @@ function Login(props) {
     <Container>
       <Row className="d-flex justify-content-center align-items-center">
         <Col sm="12" md={{ size: 6 }}>
-          <div className="paper p-4">
+          <div className="paper p-4 bg-white">
             <div className="py-2">
               <h3 className="pb-3 login-title text-center">
                 Welcome to ZYCLYX Employee Portal
@@ -139,6 +139,7 @@ function Login(props) {
           }
           .login-title {
             color: #2196f3;
+            font-size: 1.3rem;
           }
         `}
       </style>
