@@ -14,11 +14,13 @@ function Home() {
   }, []);
   return (
     <div className="container-fluid">
-      <div className="content-wrapper">
-        <h4 className="px-3 py-4 user-title ml-4">
-          Welcome, {user && user.username}
-        </h4>
-      </div>
+      {user && (
+        <div className="content-wrapper">
+          <h4 className="px-3 py-4 user-title ml-4">
+            Welcome, {user && user.username}
+          </h4>
+        </div>
+      )}
     </div>
   );
 }

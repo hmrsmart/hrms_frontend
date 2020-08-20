@@ -61,10 +61,11 @@ const Layout = (props) => {
       </header> */}
       <Navbar color="dark" dark expand="md" className="top-nav py-2">
         <Link href="/">
-          <NavbarBrand>
+          <a className="navbar-brand">
             <img src="./logo-white.png" alt="ZYCLYX logo" className="ml-2" />
-          </NavbarBrand>
+          </a>
         </Link>
+
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
