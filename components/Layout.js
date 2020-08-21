@@ -168,7 +168,21 @@ const Layout = (props) => {
                     <NavText>Attendance</NavText>
                   </NavItem>
                 </Link>
-
+                <Link href="/holidays">
+                  <NavItem eventKey="noticeboard">
+                    <NavIcon>
+                      <i
+                        className="fa fa-fw fa-recycle"
+                        style={{
+                          fontSize: "1.5em",
+                          color: "#EB9B20",
+                          opacity: 1,
+                        }}
+                      />
+                    </NavIcon>
+                    <NavText>Holidays</NavText>
+                  </NavItem>
+                </Link>
                 <Link href="/leaves">
                   <NavItem eventKey="leaves">
                     <NavIcon>
@@ -229,21 +243,7 @@ const Layout = (props) => {
                     <NavText>Hiring</NavText>
                   </NavItem>
                 </Link>
-                <Link href="/noticeboard">
-                  <NavItem eventKey="noticeboard">
-                    <NavIcon>
-                      <i
-                        className="fa fa-fw fa-newspaper-o"
-                        style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
-                        }}
-                      />
-                    </NavIcon>
-                    <NavText>Noticeboard</NavText>
-                  </NavItem>
-                </Link>
+
                 <Link href="/iprocurement">
                   <NavItem eventKey="iprocurement">
                     <NavIcon>
