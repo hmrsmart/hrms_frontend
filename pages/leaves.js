@@ -15,7 +15,7 @@ const LeaveRequest = (props) => {
       router.push("/login"); // redirect if you're not logged in
     }
     const token = Cookie.get("token");
-    if (token) {
+    if (token && user) {
       fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/leave-requests?Employee_Name=${user.username}`,
         {
