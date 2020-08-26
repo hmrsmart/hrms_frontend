@@ -19,7 +19,6 @@ class MyApp extends App {
   componentDidMount() {
     // grab token value from cookie
     const token = Cookie.get("token");
-    console.log(token);
     if (token) {
       // authenticate the token on the server and place set user object
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
