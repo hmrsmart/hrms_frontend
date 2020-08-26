@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
-import { getDate, getDateFormat } from "../lib/date";
+import { getDateDDMMYYYY, getDateFormat } from "../lib/date";
 
 const RequestLeave = () => {
   const { user, setUser } = useContext(AppContext);
@@ -58,7 +58,7 @@ const RequestLeave = () => {
                 className="form-control"
                 id="task"
                 placeholder="Task Description"
-                value={getDate(new Date())}
+                value={getDateDDMMYYYY(new Date())}
                 disabled
                 name="Applied_Date"
                 ref={register({ required: true })}
