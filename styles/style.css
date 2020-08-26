@@ -26,3 +26,36 @@ body {
   font-size: 14px;
   color: #eb9b20;
 }
+.task-text {
+  max-width: 250px;
+  font-size: 14px;
+}
+.time-input label,
+.break-label {
+  color: #eb9b20;
+}
+.time-input input {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.time-input .form-control:disabled {
+  background-color: rgba(235, 153, 30, 0.05);
+  border: 1px solid rgba(235, 153, 30, 0.5);
+}
+.check-in:disabled {
+  cursor: not-allowed;
+}
+.break-time {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.break-time-label {
+  font-size: 1rem;
+}
+.attendance-notes {
+  max-width: 250px;
+  font-size: 14px;
+}
+.break-logs li:empty {
+  display: none;
+}

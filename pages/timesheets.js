@@ -75,8 +75,8 @@ const Timesheet = (props) => {
                 <tr>
                   <th scope="row">{index + 1}</th>
                   <td>{task.Date}</td>
-                  <td>{task.Task}</td>
-                  <td>{task.Time_Est}</td>
+                  <td className="task-text">{task.Task}</td>
+                  <td className="text-center">{task.Time_Est}</td>
                   <td>{task.Status}</td>
                   <td>{task.Priority}</td>
                   <td>{task.Due_Date}</td>
