@@ -37,7 +37,7 @@ const Payslips = () => {
 
   return (
     <div className="container-fluid px-5 ml-4 d-flex justify-conent-center flex-column">
-      <h2 className="py-3">Holidays List</h2>
+      <h2 className="py-3">Pay Slips</h2>
 
       <table className="table table-striped">
         <thead>
