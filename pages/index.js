@@ -9,15 +9,15 @@ function Home() {
   const router = useRouter();
   useEffect(() => {
     if (!appContext.isAuthenticated) {
-      router.push("/login"); // redirect if you're not logged in
+      router.push("/login"); // redirect if user not logged in
     }
   }, []);
   return (
-    <div className="container-fluid">
+    <div className="container-fluid px-5 ml-4 d-flex justify-conent-center flex-column">
       {user && (
         <div className="content-wrapper">
           <h4 className="px-3 py-4 user-title ml-4">
-            Welcome, {user && user.username}
+            Welcome, <strong> {user && user.username}</strong>
           </h4>
         </div>
       )}

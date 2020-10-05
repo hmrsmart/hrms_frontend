@@ -13,7 +13,7 @@ const Holidays = () => {
 
   useEffect(() => {
     if (!appContext.isAuthenticated) {
-      router.push("/login"); // redirect if you're not logged in
+      router.push("/login"); // redirect if user not logged in
     }
     const token = Cookie.get("token");
     if (token) {
@@ -27,7 +27,6 @@ const Holidays = () => {
         })
         .then((data) => {
           setHolidays(data);
-          console.log(data);
         });
     }
   }, []);
@@ -50,7 +49,7 @@ const Holidays = () => {
           {holidays &&
             holidays.map((task, index) => {
               return (
-                <tr>
+                <tr key={task.Ocation}>
                   <th scope="row">{index + 1}</th>
                   <td>{task.Date}</td>
                   <td>{getDay(task.Date)}</td>

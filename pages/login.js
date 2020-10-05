@@ -19,12 +19,13 @@ function Login(props) {
   const [error, setError] = useState(false);
   const router = useRouter();
   const appContext = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
 
   useEffect(() => {
     if (appContext.isAuthenticated) {
       router.push("/"); // redirect if you're already logged in
     }
-  }, []);
+  }, [user]);
 
   function onChange(event) {
     updateData({ ...data, [event.target.name]: event.target.value });
@@ -89,7 +90,7 @@ function Login(props) {
                         login(data.identifier, data.password)
                           .then((res) => {
                             setLoading(false);
-                            // set authed User in global context to update header/app state
+                            // set authed User in global context to access in state
                             appContext.setUser(res.data.user);
                           })
                           .catch((error) => {

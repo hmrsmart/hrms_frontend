@@ -37,7 +37,6 @@ function PasswordUpdate(props) {
   }
 
   function resetPassword() {
-    console.log({ data, code });
     if (
       data.password !== "" &&
       data.passwordConfirmation !== "" &&
@@ -53,10 +52,9 @@ function PasswordUpdate(props) {
         .then((response) => {
           setLoading(true);
           setSuccess(true);
-          console.log("Your user's password has been reset.", response);
         })
         .catch((error) => {
-          console.log("An error occurred:", error.response);
+          // console.log("An error occurred:", error.response);
         });
     }
   }

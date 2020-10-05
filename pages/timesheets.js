@@ -5,23 +5,18 @@ import { useForm } from "react-hook-form";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 const Timesheet = (props) => {
   const { buttonLabel, className } = props;
-
-  const [modal, setModal] = useState(false);
   const [tasks, setTasks] = useState([]);
 
-  const toggle = () => setModal(!modal);
-
   const { user, setUser } = useContext(AppContext);
-  console.log(user);
   const appContext = useContext(AppContext);
   const router = useRouter();
+
   useEffect(() => {
     if (!appContext.isAuthenticated) {
-      router.push("/login"); // redirect if you're not logged in
+      router.push("/login"); // redirect if user not logged in
     }
   }, []);
 
@@ -41,7 +36,6 @@ const Timesheet = (props) => {
         })
         .then((data) => {
           setTasks(data);
-          console.log(data);
         });
     }
   }, []);
@@ -69,11 +63,11 @@ const Timesheet = (props) => {
           </tr>
         </thead>
         <tbody>
-          {tasks &&
+          {tasks.length !== 0 ? (
             tasks.map((task, index) => {
               return (
-                <tr>
-                  <th scope="row">{index + 1}</th>
+                <tr key={task.Task.substring(0, 10)}>
+                  <td scope="row">{index + 1}</td>
                   <td>{task.Date}</td>
                   <td className="task-text">{task.Task}</td>
                   <td className="text-center">{task.Time_Est}</td>
@@ -84,7 +78,14 @@ const Timesheet = (props) => {
                   <td>{task.Remarks}</td>
                 </tr>
               );
-            })}
+            })
+          ) : (
+            <tr>
+              <td colSpan="9" className="text-center py-5">
+                There are no tasks
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

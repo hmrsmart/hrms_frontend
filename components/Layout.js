@@ -217,7 +217,7 @@ const Layout = (props) => {
                     <NavText>Payslips</NavText>
                   </NavItem>
                 </Link>
-                <Link href="/team">
+                {/* <Link href="/team">
                   <NavItem eventKey="team">
                     <NavIcon>
                       <i
@@ -231,8 +231,8 @@ const Layout = (props) => {
                     </NavIcon>
                     <NavText>Team</NavText>
                   </NavItem>
-                </Link>
-                <Link href="/hiring">
+                </Link> */}
+                {/* <Link href="/hiring">
                   <NavItem eventKey="hiring">
                     <NavIcon>
                       <i
@@ -246,9 +246,9 @@ const Layout = (props) => {
                     </NavIcon>
                     <NavText>Hiring</NavText>
                   </NavItem>
-                </Link>
+                </Link> */}
 
-                <Link href="/iprocurement">
+                {/* <Link href="/iprocurement">
                   <NavItem eventKey="iprocurement">
                     <NavIcon>
                       <i
@@ -262,7 +262,7 @@ const Layout = (props) => {
                     </NavIcon>
                     <NavText>IProcurement</NavText>
                   </NavItem>
-                </Link>
+                </Link> */}
               </SideNav.Nav>
             </SideNav>
           </div>

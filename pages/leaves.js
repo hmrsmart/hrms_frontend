@@ -29,7 +29,7 @@ const LeaveRequest = (props) => {
           return res.json();
         })
         .then((data) => {
-          data.length !== 0 && setBalance(data);
+          data.length !== 0 && setLeaves(data);
         });
 
       fetch(
@@ -44,8 +44,7 @@ const LeaveRequest = (props) => {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
-          data.length !== 0 && setLeaves(data);
+          data.length !== 0 && setBalance(data);
         });
     }
   }, []);
@@ -53,11 +52,7 @@ const LeaveRequest = (props) => {
   return (
     <div className="container-fluid px-5 ml-4 d-flex justify-conent-center flex-column">
       <h2 className="py-3">Leave Balance</h2>
-      {/* <div className="d-flex py-3">
-        <Link href="/leave-request">
-          <a className="ml-auto btn btn-primary">Request Leave</a>
-        </Link>
-      </div> */}
+
       <table className="table table-striped">
         <thead>
           <tr>
@@ -72,8 +67,8 @@ const LeaveRequest = (props) => {
           </tr>
         </thead>
         <tbody>
-          {leaves.length !== 0 ? (
-            leaves.map((task, index) => {
+          {balance.length !== 0 ? (
+            balance.map((task, index) => {
               return (
                 <tr>
                   <td>{task.CL_Utilized}</td>
@@ -133,7 +128,7 @@ const LeaveRequest = (props) => {
           ) : (
             <tr>
               <td colSpan="8" className="text-center py-5">
-                There is no Leave Requests
+                There are no Leave Requests
               </td>
             </tr>
           )}
