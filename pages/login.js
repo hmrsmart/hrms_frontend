@@ -76,11 +76,11 @@ function Login(props) {
                   </FormGroup>
 
                   <FormGroup>
-                    <span>
+                    {/* <span>
                       <a href="">
                         <small>Forgot Password?</small>
                       </a>
-                    </span>
+                    </span> */}
                     <Button
                       style={{ float: "right", width: 120 }}
                       color="primary"
