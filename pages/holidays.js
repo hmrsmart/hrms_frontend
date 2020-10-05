@@ -41,7 +41,7 @@ const Holidays = () => {
             <th scope="col">SNO</th>
             <th scope="col">Date</th>
             <th scope="col">Day</th>
-            <th scope="col">Occation</th>
+            <th scope="col">Occasion</th>
             <th scope="col">Holiday Type</th>
           </tr>
         </thead>
