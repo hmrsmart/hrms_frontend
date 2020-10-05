@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -19,6 +20,7 @@ function PasswordUpdate(props) {
     passwordConfirmation: "",
   });
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
   const appContext = useContext(AppContext);
@@ -34,79 +36,101 @@ function PasswordUpdate(props) {
     updateData({ ...data, [event.target.name]: event.target.value });
   }
 
+  function resetPassword() {
+    console.log({ data, code });
+    if (
+      data.password !== "" &&
+      data.passwordConfirmation !== "" &&
+      data.passwordConfirmation == data.password
+    ) {
+      setLoading(true);
+      axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
+          code: code, // code contained in the reset link of step 3.
+          password: data.password,
+          passwordConfirmation: data.passwordConfirmation,
+        })
+        .then((response) => {
+          setLoading(true);
+          setSuccess(true);
+          console.log("Your user's password has been reset.", response);
+        })
+        .catch((error) => {
+          console.log("An error occurred:", error.response);
+        });
+    }
+  }
   return (
     <Container>
-      <Row className="d-flex justify-content-center align-items-center">
-        <Col sm="12" md={{ size: 6 }}>
-          <div className="paper p-4 bg-white">
-            <div className="py-2">
-              <h3 className="pb-3 login-title text-center">
-                Reset Account Password
-              </h3>
-            </div>
-            <section className="wrapper">
-              {Object.entries(error).length !== 0 &&
-                error.constructor === Object &&
-                error.message.map((error) => {
-                  return (
-                    <div
-                      key={error.messages[0].id}
-                      style={{ marginBottom: 10 }}
-                    >
-                      <small style={{ color: "red" }}>
-                        {error.messages[0].message}
-                      </small>
-                    </div>
-                  );
-                })}
-              <Form>
-                <fieldset disabled={loading}>
-                  <FormGroup>
-                    <Label>Password</Label>
-                    <Input
-                      onChange={(event) => onChange(event)}
-                      name="password"
-                      type="password"
-                      style={{ height: 55, fontSize: "1.2em" }}
-                    />
-                  </FormGroup>
-                  <FormGroup style={{ marginBottom: 30 }}>
-                    <Label>Confirm Password</Label>
-                    <Input
-                      onChange={(event) => onChange(event)}
-                      type="password"
-                      name="passwordConfirmation"
-                      style={{ height: 55, fontSize: "1.2em" }}
-                    />
-                  </FormGroup>
+      {!success ? (
+        <Row className="d-flex justify-content-center align-items-center">
+          <Col sm="12" md={{ size: 6 }}>
+            <div className="paper p-4 bg-white">
+              <div className="py-2">
+                <h3 className="pb-3 login-title text-center">
+                  Reset Account Password
+                </h3>
+              </div>
+              <section className="wrapper">
+                {Object.entries(error).length !== 0 &&
+                  error.constructor === Object &&
+                  error.message.map((error) => {
+                    return (
+                      <div
+                        key={error.messages[0].id}
+                        style={{ marginBottom: 10 }}
+                      >
+                        <small style={{ color: "red" }}>
+                          {error.messages[0].message}
+                        </small>
+                      </div>
+                    );
+                  })}
+                <Form>
+                  <fieldset disabled={loading}>
+                    <FormGroup>
+                      <Label>Password</Label>
+                      <Input
+                        onChange={(event) => onChange(event)}
+                        name="password"
+                        type="password"
+                        required
+                        style={{ height: 55, fontSize: "1.2em" }}
+                      />
+                    </FormGroup>
+                    <FormGroup style={{ marginBottom: 30 }}>
+                      <Label>Confirm Password</Label>
+                      <Input
+                        onChange={(event) => onChange(event)}
+                        type="password"
+                        name="passwordConfirmation"
+                        style={{ height: 55, fontSize: "1.2em" }}
+                        required
+                      />
+                    </FormGroup>
 
-                  <FormGroup>
-                    <Button
-                      style={{ float: "right", width: 120 }}
-                      color="primary"
-                      onClick={() => {
-                        setLoading(true);
-                        login(data.identifier, data.password)
-                          .then((res) => {
-                            setLoading(false);
-                            // set authed User in global context to update header/app state
-                            appContext.setUser(res.data.user);
-                          })
-                          .catch((error) => {
-                            setError(error.response.data);
-                            setLoading(false);
-                          });
-                      }}
-                    >
-                      {loading ? "Loading... " : "Update"}
-                    </Button>
-                  </FormGroup>
-                </fieldset>
-              </Form>
-            </section>
-          </div>
-        </Col>
-      </Row>
+                    <FormGroup>
+                      <Button
+                        style={{ float: "right", width: 120 }}
+                        color="primary"
+                        onClick={() => {
+                          resetPassword();
+                        }}
+                      >
+                        {loading ? "Loading... " : "Update"}
+                      </Button>
+                    </FormGroup>
+                  </fieldset>
+                </Form>
+              </section>
+            </div>
+          </Col>
+        </Row>
+      ) : (
+        <div className="py-4">
+          <h3 className="text-center">Password Reset Successful</h3>
+        </div>
+      )}
       <style jsx>
         {`
           .paper {

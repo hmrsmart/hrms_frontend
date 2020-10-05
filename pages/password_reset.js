@@ -1,15 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from "reactstrap";
+import { Container } from "reactstrap";
 import { login } from "../lib/auth";
 import AppContext from "../context/AppContext";
 
@@ -20,7 +11,7 @@ function PasswordReset(props) {
 
   useEffect(() => {
     var formdata = new FormData();
-    formdata.append("email", "skanjarla@zyclyx.com");
+    formdata.append("email", user.email);
 
     var requestOptions = {
       method: "POST",
@@ -29,7 +20,7 @@ function PasswordReset(props) {
     };
 
     fetch(
-      "https://admin-zyclyx.herokuapp.com/auth/forgot-password",
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
       requestOptions
     )
       .then((response) => response.text())
