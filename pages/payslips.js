@@ -48,7 +48,7 @@ const Payslips = () => {
           </tr>
         </thead>
         <tbody>
-          {payslips &&
+          {payslips.length !== 0 ? (
             payslips.map((payslip, index) => {
               return (
                 <tr>
@@ -68,7 +68,14 @@ const Payslips = () => {
                   </td>
                 </tr>
               );
-            })}
+            })
+          ) : (
+            <tr>
+              <td colSpan="8" className="text-center py-5">
+                There are no Pay slips
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
