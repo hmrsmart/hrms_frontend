@@ -29,11 +29,11 @@ const Layout = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  useEffect(() => {
-    if (!appContext.isAuthenticated) {
-      router.push("/login"); // redirect to login page if user not logged in
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!appContext.isAuthenticated) {
+  //     router.push("/login"); // redirect to login page if user not logged in
+  //   }
+  // }, []);
 
   return (
     <div>
@@ -75,7 +75,11 @@ const Layout = (props) => {
                   {user.username}
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>Profile</DropdownItem>
+                  <DropdownItem>
+                    <Link href="/password_reset">
+                      <a>Reset Password</a>
+                    </Link>
+                  </DropdownItem>
 
                   <DropdownItem divider />
                   <DropdownItem>
