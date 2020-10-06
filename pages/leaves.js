@@ -56,9 +56,9 @@ const LeaveRequest = (props) => {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th scope="col">CL Uitilized</th>
-            <th scope="col">SL Uitilized</th>
-            <th scope="col">Total Uitilized</th>
+            <th scope="col">CL Utilized</th>
+            <th scope="col">SL Utilized</th>
+            <th scope="col">Total Utilized</th>
             <th scope="col">Casual Leaves</th>
             <th scope="col">Special Leaves</th>
             <th scope="col">Sick Leaves</th>
