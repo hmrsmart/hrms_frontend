@@ -176,7 +176,7 @@ const Layout = (props) => {
                   <NavItem eventKey="noticeboard">
                     <NavIcon>
                       <i
-                        className="fa fa-fw fa-recycle"
+                        className="fa fa-fw fa-coffee"
                         style={{
                           fontSize: "1.5em",
                           color: "#EB9B20",
