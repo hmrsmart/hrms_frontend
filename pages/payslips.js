@@ -50,7 +50,7 @@ const Payslips = () => {
           {payslips.length !== 0 ? (
             payslips.map((payslip, index) => {
               return (
-                <tr key={month + index}>
+                <tr key={payslip.month + index}>
                   <th scope="row">{index + 1}</th>
                   <td>
                     {payslip.Month} - {payslip.Year}
