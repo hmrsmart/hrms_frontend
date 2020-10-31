@@ -151,6 +151,7 @@ class Attendance extends React.Component {
       Time: clockTime,
       Status: "",
       Notes: "",
+      user: user,
     };
 
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/attendances`, {
@@ -191,6 +192,7 @@ class Attendance extends React.Component {
       Time: clockTime,
       Status: "",
       Notes: "",
+      user: user,
     };
 
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/attendances`, {
@@ -251,6 +253,7 @@ class Attendance extends React.Component {
       Status: "In Break",
       Notes: breakTimeData.notes,
       Seconds: breakTimeData.seconds,
+      user: user,
     };
 
     const URL = breakTimeData.id
