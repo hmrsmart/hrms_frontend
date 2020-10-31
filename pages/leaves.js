@@ -7,18 +7,18 @@ import AppContext from "../context/AppContext";
 const LeaveRequest = (props) => {
   const [leaves, setLeaves] = useState([]);
   const [balance, setBalance] = useState([]);
-
-  const { user, setUser } = useContext(AppContext);
+  const [isLoading, setLoading] = useState(true);
+  const { user } = useContext(AppContext);
   const appContext = useContext(AppContext);
   const router = useRouter();
   useEffect(() => {
     if (!appContext.isAuthenticated) {
-      router.push("/login"); // redirect if you're not logged in
+      router.push("/login");
     }
     const token = Cookie.get("token");
     if (token && user) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/leave-requests?Employee_Name=${user.username}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/leave-requests?user.id=${user.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -26,14 +26,21 @@ const LeaveRequest = (props) => {
         }
       )
         .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
           return res.json();
         })
         .then((data) => {
           data.length !== 0 && setLeaves(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
         });
 
       fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/leave-balances?user.username=${user.username}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/leave-balances?user.id=${user.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -41,16 +48,22 @@ const LeaveRequest = (props) => {
         }
       )
         .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
           return res.json();
         })
         .then((data) => {
           data.length !== 0 && setBalance(data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     }
-  }, []);
+  }, [user]);
 
   return (
-    <div className="container-fluid px-5 ml-4 d-flex justify-conent-center flex-column">
+    <div className="container-fluid d-flex justify-conent-center flex-column">
       <h2 className="py-3">Leave Balance</h2>
 
       <table className="table table-striped">
@@ -67,28 +80,35 @@ const LeaveRequest = (props) => {
           </tr>
         </thead>
         <tbody>
-          {balance.length !== 0 ? (
-            balance.map((task, index) => {
-              return (
-                <tr>
-                  <td>{task.CL_Utilized}</td>
-                  <td>{task.SL_Utilized}</td>
-                  <td>{task.SL_Utilized}</td>
-                  <td>{task.Total_Leaves_Utilized}</td>
-                  <td>{task.Casual_Leaves}</td>
-                  <td>{task.Special_Leaves}</td>
-                  <td>{task.Bereavement_Leave}</td>
-                  <td>{task.Leave_Balance}</td>
-                </tr>
-              );
-            })
-          ) : (
+          {isLoading && (
             <tr>
               <td colSpan="8" className="text-center py-5">
-                There is no Leave Balance Data
+                Loading . . .
               </td>
             </tr>
           )}
+          {balance.length !== 0
+            ? balance.map((task, index) => {
+                return (
+                  <tr>
+                    <td>{task.CL_Utilized}</td>
+                    <td>{task.SL_Utilized}</td>
+                    <td>{task.SL_Utilized}</td>
+                    <td>{task.Total_Leaves_Utilized}</td>
+                    <td>{task.Casual_Leaves}</td>
+                    <td>{task.Special_Leaves}</td>
+                    <td>{task.Bereavement_Leave}</td>
+                    <td>{task.Leave_Balance}</td>
+                  </tr>
+                );
+              })
+            : !isLoading && (
+                <tr>
+                  <td colSpan="8" className="text-center py-5">
+                    There is no Leave Balance Data
+                  </td>
+                </tr>
+              )}
         </tbody>
       </table>
 
@@ -111,27 +131,34 @@ const LeaveRequest = (props) => {
           </tr>
         </thead>
         <tbody>
-          {leaves.length !== 0 ? (
-            leaves.map((task, index) => {
-              return (
-                <tr>
-                  <th scope="row">{index + 1}</th>
-                  <td>{task.Applied_Date}</td>
-                  <td>{task.Leave_Type}</td>
-                  <td>{task.From_Date}</td>
-                  <td>{task.To_Date}</td>
-                  <td>{task.Approval}</td>
-                  <td>{task.Message}</td>
-                </tr>
-              );
-            })
-          ) : (
+          {isLoading && (
             <tr>
-              <td colSpan="8" className="text-center py-5">
-                There are no Leave Requests
+              <td colSpan="7" className="text-center py-5">
+                Loading . . .
               </td>
             </tr>
           )}
+          {leaves.length !== 0
+            ? leaves.map((task, index) => {
+                return (
+                  <tr>
+                    <th scope="row">{index + 1}</th>
+                    <td>{task.Applied_Date}</td>
+                    <td>{task.Leave_Type}</td>
+                    <td>{task.From_Date}</td>
+                    <td>{task.To_Date}</td>
+                    <td>{task.Approval}</td>
+                    <td>{task.Message}</td>
+                  </tr>
+                );
+              })
+            : !isLoading && (
+                <tr>
+                  <td colSpan="8" className="text-center py-5">
+                    There are no Leave Requests
+                  </td>
+                </tr>
+              )}
         </tbody>
       </table>
     </div>

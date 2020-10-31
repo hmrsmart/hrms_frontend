@@ -35,9 +35,10 @@ function EmailVerification() {
             message: result.message[0].messages[0].message,
           });
         }
-        if (result.ok) {
-          setHasSuccess(true);
+        if (!res.ok) {
+          throw Error(res.statusText);
         }
+        setHasSuccess(true);
       })
       .catch((error) => console.log("error", error));
   };

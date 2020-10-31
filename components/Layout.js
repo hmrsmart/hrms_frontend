@@ -28,12 +28,8 @@ const Layout = (props) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-
-  // useEffect(() => {
-  //   if (!appContext.isAuthenticated) {
-  //     router.push("/login"); // redirect to login page if user not logged in
-  //   }
-  // }, []);
+  const [isSideNavExpanded, setSideNavExpanded] = useState(false);
+  const toggleSideNav = () => setSideNavExpanded(!isSideNavExpanded);
 
   return (
     <div>
@@ -49,20 +45,10 @@ const Layout = (props) => {
         />
       </Head>
 
-      {/* <header className="top-nav py-3 d-flex">
-        <div className="logo-wrapper ml-3">
-          <img src="./logo-white.png" alt="ZYCLYX logo" />
-        </div>
-        <div className="ml-auto pr-4 d-flex align-items-center">
-          <Link href="/login">
-            <a>Sign In</a>
-          </Link>
-        </div>
-      </header> */}
       <Navbar color="dark" dark expand="md" className="top-nav py-2">
         <Link href="/">
           <a className="navbar-brand">
-            <img src="./logo-white.png" alt="ZYCLYX logo" className="ml-2" />
+            <img src="./logo-white.png" alt="ZYCLYX" />
           </a>
         </Link>
 
@@ -105,14 +91,11 @@ const Layout = (props) => {
           </Nav>
         </Collapse>
       </Navbar>
+
       <div className="container-fluid">
         {user && (
           <div className="side-nav">
-            <SideNav
-              onSelect={(selected) => {
-                // Add your code here
-              }}
-            >
+            <SideNav onToggle={() => toggleSideNav()}>
               <SideNav.Toggle />
               <SideNav.Nav defaultSelected="home">
                 <Link href="/">
@@ -217,57 +200,13 @@ const Layout = (props) => {
                     <NavText>Payslips</NavText>
                   </NavItem>
                 </Link>
-                {/* <Link href="/team">
-                  <NavItem eventKey="team">
-                    <NavIcon>
-                      <i
-                        className="fa fa-fw fa-users"
-                        style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
-                        }}
-                      />
-                    </NavIcon>
-                    <NavText>Team</NavText>
-                  </NavItem>
-                </Link> */}
-                {/* <Link href="/hiring">
-                  <NavItem eventKey="hiring">
-                    <NavIcon>
-                      <i
-                        className="fa fa-fw fa-briefcase"
-                        style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
-                        }}
-                      />
-                    </NavIcon>
-                    <NavText>Hiring</NavText>
-                  </NavItem>
-                </Link> */}
-
-                {/* <Link href="/iprocurement">
-                  <NavItem eventKey="iprocurement">
-                    <NavIcon>
-                      <i
-                        className="fa fa-fw fa-check-square"
-                        style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
-                        }}
-                      />
-                    </NavIcon>
-                    <NavText>IProcurement</NavText>
-                  </NavItem>
-                </Link> */}
               </SideNav.Nav>
             </SideNav>
           </div>
         )}
-        <div className="content-wrapper">
+        <div
+          className={`content-wrapper ${isSideNavExpanded && "content-fluid"} `}
+        >
           <Container fluid>{props.children}</Container>
         </div>
       </div>

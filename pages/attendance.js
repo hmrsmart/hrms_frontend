@@ -39,7 +39,6 @@ class Attendance extends React.Component {
     const { router } = this.props;
     const token = Cookie.get("token");
     const user = this.context.user;
-    // console.log(this.context.isAuthenticated);
 
     if (!this.context.isAuthenticated) {
       router.push("/login"); // redirect if user not logged in
@@ -63,6 +62,9 @@ class Attendance extends React.Component {
         }
       )
         .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
           return res.json();
         })
         .then((resjson) => {
@@ -107,11 +109,14 @@ class Attendance extends React.Component {
               }
             });
           }
+        })
+        .catch((error) => {
+          console.log(error);
         });
 
-      if (token) {
+      if (token && user) {
         fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/attendances?Emp_Name=${user.username}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/attendances?user.id=${user.id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -119,10 +124,16 @@ class Attendance extends React.Component {
           }
         )
           .then((res) => {
+            if (!res.ok) {
+              throw Error(res.statusText);
+            }
             return res.json();
           })
           .then((data) => {
             this.setState({ tasks: data });
+          })
+          .catch((error) => {
+            console.log(error);
           });
       }
     }
@@ -150,6 +161,9 @@ class Attendance extends React.Component {
       body: JSON.stringify(payload),
     })
       .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
         this.setState({ loginLoading: true });
         return res.json();
       })
@@ -159,6 +173,9 @@ class Attendance extends React.Component {
           userLoginTime: data.Time,
           userLoggedIn: true,
         });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
@@ -184,12 +201,18 @@ class Attendance extends React.Component {
       body: JSON.stringify(payload),
     })
       .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
         return res.json();
       })
       .then((data) => {
         this.setState({
           userLoggedIn: false,
         });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
@@ -244,6 +267,9 @@ class Attendance extends React.Component {
       body: JSON.stringify(payload),
     })
       .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
         return res.json();
       })
       .then((data) => {
@@ -284,10 +310,16 @@ class Attendance extends React.Component {
             }),
           })
             .then((res) => {
+              if (!res.ok) {
+                throw Error(res.statusText);
+              }
               return res.json();
             })
             .then((resjson) => {
               // console.log(resjson);
+            })
+            .catch((error) => {
+              console.log(error);
             });
         }, 4000);
         this.setState({ breakDurationID: syncID });
@@ -346,7 +378,7 @@ class Attendance extends React.Component {
     } = this.state;
     const { duration, notes } = breakTimeData;
     return (
-      <div className="container-fluid px-5 ml-4 d-flex justify-conent-center flex-column">
+      <div className="container-fluid d-flex justify-conent-center flex-column">
         <h2 className="py-3">Attendance</h2>
         <div className="row d-flex justify-content-center">
           <div className="col-4">

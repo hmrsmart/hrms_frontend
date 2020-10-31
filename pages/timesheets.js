@@ -6,25 +6,23 @@ import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 
-const Timesheet = (props) => {
-  const { buttonLabel, className } = props;
+const Timesheet = () => {
   const [tasks, setTasks] = useState([]);
-
-  const { user, setUser } = useContext(AppContext);
+  const [isLoading, setLoading] = useState(true);
+  const { user } = useContext(AppContext);
   const appContext = useContext(AppContext);
   const router = useRouter();
-
+  console.log(user);
   useEffect(() => {
     if (!appContext.isAuthenticated) {
       router.push("/login"); // redirect if user not logged in
     }
-  }, []);
 
-  useEffect(() => {
     const token = Cookie.get("token");
-    if (token) {
+    console.log(token);
+    if (token && user) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/timesheets?Owner=${user.username}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/timesheets?user.id=${user.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -32,16 +30,23 @@ const Timesheet = (props) => {
         }
       )
         .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
           return res.json();
         })
         .then((data) => {
           setTasks(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     }
-  }, []);
+  }, [user]);
 
   return (
-    <div className="container-fluid px-5 ml-4 d-flex justify-conent-center flex-column">
+    <div className="container-fluid d-flex justify-conent-center flex-column">
       <h2 className="py-3">Timesheet</h2>
       <div className="d-flex py-3">
         <Link href="/add-task">
@@ -63,29 +68,37 @@ const Timesheet = (props) => {
           </tr>
         </thead>
         <tbody>
-          {tasks.length !== 0 ? (
-            tasks.map((task, index) => {
-              return (
-                <tr key={task.Task.substring(0, 10)}>
-                  <td scope="row">{index + 1}</td>
-                  <td>{task.Date}</td>
-                  <td className="task-text">{task.Task}</td>
-                  <td className="text-center">{task.Time_Est}</td>
-                  <td>{task.Status}</td>
-                  <td>{task.Priority}</td>
-                  <td>{task.Due_Date}</td>
-                  <td>{task.Project}</td>
-                  <td>{task.Remarks}</td>
-                </tr>
-              );
-            })
-          ) : (
+          {isLoading && (
             <tr>
               <td colSpan="9" className="text-center py-5">
-                There are no tasks
+                Loading . . .
               </td>
             </tr>
           )}
+
+          {tasks.length !== 0
+            ? tasks.map((task, index) => {
+                return (
+                  <tr key={task.Task.substring(0, 10)}>
+                    <td scope="row">{index + 1}</td>
+                    <td>{task.Date}</td>
+                    <td className="task-text">{task.Task}</td>
+                    <td className="text-center">{task.Time_Est}</td>
+                    <td>{task.Status}</td>
+                    <td>{task.Priority}</td>
+                    <td>{task.Due_Date}</td>
+                    <td>{task.Project}</td>
+                    <td>{task.Remarks}</td>
+                  </tr>
+                );
+              })
+            : !isLoading && (
+                <tr>
+                  <td colSpan="9" className="text-center py-5">
+                    There are no tasks
+                  </td>
+                </tr>
+              )}
         </tbody>
       </table>
     </div>

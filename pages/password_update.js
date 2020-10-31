@@ -11,7 +11,6 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { login } from "../lib/auth";
 import AppContext from "../context/AppContext";
 
 function PasswordUpdate(props) {
@@ -45,16 +44,19 @@ function PasswordUpdate(props) {
       setLoading(true);
       axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
-          code: code, // code contained in the reset link of step 3.
+          code: code,
           password: data.password,
           passwordConfirmation: data.passwordConfirmation,
         })
-        .then((response) => {
+        .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
           setLoading(true);
           setSuccess(true);
         })
         .catch((error) => {
-          // console.log("An error occurred:", error.response);
+          console.log(error);
         });
     }
   }

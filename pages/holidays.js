@@ -6,7 +6,8 @@ import { getDay } from "../lib/date";
 
 const Holidays = () => {
   const [holidays, setHolidays] = useState([]);
-  const { user, setUser } = useContext(AppContext);
+  const [isLoading, setLoading] = useState(true);
+  const { user } = useContext(AppContext);
 
   const appContext = useContext(AppContext);
   const router = useRouter();
@@ -16,23 +17,31 @@ const Holidays = () => {
       router.push("/login"); // redirect if user not logged in
     }
     const token = Cookie.get("token");
-    if (token) {
+    if (token && user) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/holidays`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
         .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
           return res.json();
         })
         .then((data) => {
           setHolidays(data);
+          setLoading(false);
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     }
-  }, []);
+  }, [user]);
 
   return (
-    <div className="container-fluid px-5 ml-4 d-flex justify-conent-center flex-column">
+    <div className="container-fluid d-flex justify-conent-center flex-column">
       <h2 className="py-3">Holidays List</h2>
 
       <table className="table table-striped">
@@ -46,6 +55,13 @@ const Holidays = () => {
           </tr>
         </thead>
         <tbody>
+          {isLoading && (
+            <tr>
+              <td colSpan="5" className="text-center py-5">
+                Loading . . .
+              </td>
+            </tr>
+          )}
           {holidays &&
             holidays.map((task, index) => {
               return (
@@ -53,7 +69,7 @@ const Holidays = () => {
                   <th scope="row">{index + 1}</th>
                   <td>{task.Date}</td>
                   <td>{getDay(task.Date)}</td>
-                  <td>{task.Ocation}</td>
+                  <td>{task.Occasion}</td>
                   <td>{task.Holiday_Type}</td>
                 </tr>
               );

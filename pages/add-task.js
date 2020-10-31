@@ -1,29 +1,28 @@
-import React, { useEffect, useContext, useState } from "react";
-import { Button } from "reactstrap";
+import React, { useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 
 const AddTask = () => {
-  const { user, setUser } = useContext(AppContext);
-  // console.log(user);
+  const { user } = useContext(AppContext);
   const appContext = useContext(AppContext);
   const router = useRouter();
 
   useEffect(() => {
     if (!appContext.isAuthenticated) {
-      router.push("/login"); // redirect if you're not logged in
+      router.push("/login");
     }
-  }, []);
+  }, [user]);
 
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data, event) => {
-    // console.log(data);
+    console.log(data);
     const token = Cookie.get("token");
-    const payload = { ...data, Owner: user.username };
-    // console.log(payload);
+    const payload = { ...data, Employee_Name: user.username, user: user };
+
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/timesheets`, {
       method: "post",
       headers: {
@@ -32,16 +31,28 @@ const AddTask = () => {
       body: JSON.stringify(payload),
     })
       .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
         return res.json();
       })
       .then((data) => {
-        //  console.log(data);
         router.push("/timesheets");
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
   return (
     <div className="container p-4">
+      <div className="d-flex justify-content-end">
+        <Link href="/timesheets">
+          <a className="btn btn-outline-warning ml-auto text-warning">
+            View All Tasks
+          </a>
+        </Link>
+      </div>
       <h3 className="text-center">Add New Task</h3>
       <div className="row d-flex justify-content-center">
         <div className="col-7">
@@ -131,7 +142,7 @@ const AddTask = () => {
                   <option>WIP</option>
                   <option>Done</option>
                   <option>Review</option>
-                  <option>Stuck</option>
+                  <option>Blockage</option>
                 </select>
                 {errors.Status && (
                   <span className="err-msg">*Status is required</span>

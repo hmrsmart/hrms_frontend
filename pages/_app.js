@@ -1,5 +1,3 @@
-/* _app.js */
-/* _app.js */
 import React from "react";
 import App from "next/app";
 import Head from "next/head";
@@ -10,10 +8,12 @@ import AppContext from "../context/AppContext";
 import withData from "../lib/apollo";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "../styles/style.css";
+import "../styles/layout.css";
 
 class MyApp extends App {
   state = {
     user: null,
+    isPageLoading: true,
   };
 
   componentDidMount() {
@@ -25,17 +25,20 @@ class MyApp extends App {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }).then(async (res) => {
-        // if res comes back not valid, token is not valid
-        // delete the token and log the user out on client
-        if (!res.ok) {
-          Cookie.remove("token");
-          this.setState({ user: null });
-          return null;
-        }
-        const user = await res.json();
-        this.setUser(user);
-      });
+      })
+        .then(async (res) => {
+          this.setState({ isPageLoading: false });
+          if (!res.ok) {
+            Cookie.remove("token");
+            this.setState({ user: null });
+            throw Error(res.statusText);
+          }
+          const user = await res.json();
+          this.setUser(user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
@@ -45,7 +48,7 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-
+    const { isPageLoading } = this.state;
     return (
       <AppContext.Provider
         value={{
@@ -73,10 +76,18 @@ class MyApp extends App {
             rel="stylesheet"
           ></link>
         </Head>
-
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        {isPageLoading ? (
+          <div className="page_loading d-flex justify-content-center align-items-center">
+            <p>Loading . . .</p>
+            <div className="spinner-border text-light" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        )}
       </AppContext.Provider>
     );
   }

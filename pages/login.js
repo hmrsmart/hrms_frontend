@@ -94,7 +94,9 @@ function Login(props) {
                             appContext.setUser(res.data.user);
                           })
                           .catch((error) => {
-                            setError(error.response.data);
+                            if (error.response.data) {
+                              setError(error.response.data);
+                            }
                             setLoading(false);
                           });
                       }}

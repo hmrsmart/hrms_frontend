@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
@@ -6,8 +6,7 @@ import AppContext from "../context/AppContext";
 import { getDateDDMMYYYY, getDateFormat } from "../lib/date";
 
 const RequestLeave = () => {
-  const { user, setUser } = useContext(AppContext);
-
+  const { user } = useContext(AppContext);
   const appContext = useContext(AppContext);
   const router = useRouter();
 
@@ -15,7 +14,7 @@ const RequestLeave = () => {
     if (!appContext.isAuthenticated) {
       router.push("/login"); // redirect if you're not logged in
     }
-  }, []);
+  }, [user]);
 
   const { register, handleSubmit, errors } = useForm();
 
@@ -26,6 +25,7 @@ const RequestLeave = () => {
       Employee_Name: user.username,
       Approval: "Pending",
       Applied_Date: getDateFormat(new Date()),
+      user: user,
     };
     // console.log(payload);
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/leave-requests`, {
@@ -36,11 +36,17 @@ const RequestLeave = () => {
       body: JSON.stringify(payload),
     })
       .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
         return res.json();
       })
       .then((data) => {
         //  console.log(data);
         router.push("/leaves");
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
