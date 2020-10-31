@@ -13,7 +13,6 @@ import "../styles/layout.css";
 class MyApp extends App {
   state = {
     user: null,
-    isPageLoading: true,
   };
 
   componentDidMount() {
@@ -48,7 +47,7 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    const { isPageLoading } = this.state;
+
     return (
       <AppContext.Provider
         value={{
@@ -76,18 +75,9 @@ class MyApp extends App {
             rel="stylesheet"
           ></link>
         </Head>
-        {isPageLoading ? (
-          <div className="page_loading d-flex justify-content-center align-items-center">
-            <p>Loading . . .</p>
-            <div className="spinner-border text-light" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
-        ) : (
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        )}
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </AppContext.Provider>
     );
   }
