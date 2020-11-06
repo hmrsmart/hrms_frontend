@@ -25,6 +25,8 @@
     "react-hook-form": "^6.4.1",
     "react-markdown": "^5.0.2",
     "react-moment": "^1.0.0",
+    "react-pdf": "^5.0.0",
+    "reactjs-pdf-reader": "^1.0.12",
     "reactstrap": "^8.5.1"
   }
 }
