@@ -29,6 +29,7 @@ const Layout = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [isSideNavExpanded, setSideNavExpanded] = useState(false);
+  const [activeLink, setActiveLink] = useState("home");
   const toggleSideNav = () => setSideNavExpanded(!isSideNavExpanded);
 
   return (
@@ -37,15 +38,15 @@ const Layout = (props) => {
         <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link
-          rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossOrigin="anonymous"
-        />
       </Head>
 
-      <Navbar color="dark" dark expand="md" className="top-nav py-2">
+      <Navbar
+        color="dark"
+        dark
+        expand="md"
+        fixed="top"
+        className="fixed top-nav py-2"
+      >
         <Link href="/">
           <a className="navbar-brand">
             <img src="./logo-white.png" alt="ZYCLYX" />
@@ -97,27 +98,38 @@ const Layout = (props) => {
           <div className="side-nav">
             <SideNav onToggle={() => toggleSideNav()}>
               <SideNav.Toggle />
-              <SideNav.Nav defaultSelected="home">
+              <SideNav.Nav>
                 <Link href="/">
-                  <NavItem eventKey="home">
+                  <NavItem
+                    eventKey="home"
+                    onSelect={(selected) => setActiveLink(selected)}
+                    active={activeLink === "home"}
+                  >
                     <NavIcon>
                       <i
                         className="fa fa-fw fa-home"
-                        style={{ fontSize: "1.5em" }}
+                        style={{
+                          fontSize: "1.3em",
+                          color: activeLink === "home" ? "#EB9B20" : "#00a14b",
+                        }}
                       />
                     </NavIcon>
                     <NavText>Home</NavText>
                   </NavItem>
                 </Link>
                 <Link href="/my-profile">
-                  <NavItem eventKey="profile">
+                  <NavItem
+                    eventKey="profile"
+                    active={activeLink === "profile"}
+                    onSelect={(selected) => setActiveLink(selected)}
+                  >
                     <NavIcon>
                       <i
-                        className="fa fa-fw fa-user"
+                        className="fa fa-fw fa-address-card"
                         style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "profile" ? "#EB9B20" : "#00a14b",
                         }}
                       />
                     </NavIcon>
@@ -125,30 +137,37 @@ const Layout = (props) => {
                   </NavItem>
                 </Link>
                 <Link href="/timesheets">
-                  <NavItem eventKey="timesheet">
+                  <NavItem
+                    eventKey="tasks"
+                    active={activeLink === "tasks"}
+                    onSelect={(selected) => setActiveLink(selected)}
+                  >
                     <NavIcon>
                       <i
                         className="fa fa-fw fa-tasks"
                         style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
+                          fontSize: "1.3em",
+                          color: activeLink === "tasks" ? "#EB9B20" : "#00a14b",
                         }}
                       />
                     </NavIcon>
-                    <NavText>Timesheets</NavText>
+                    <NavText>My Tasks</NavText>
                   </NavItem>
                 </Link>
 
                 <Link href="/attendance">
-                  <NavItem eventKey="attendance">
+                  <NavItem
+                    eventKey="attendance"
+                    active={activeLink === "attendance"}
+                    onSelect={(selected) => setActiveLink(selected)}
+                  >
                     <NavIcon>
                       <i
                         className="fa fa-fw fa-clock-o"
                         style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "attendance" ? "#EB9B20" : "#00a14b",
                         }}
                       />
                     </NavIcon>
@@ -156,14 +175,18 @@ const Layout = (props) => {
                   </NavItem>
                 </Link>
                 <Link href="/holidays">
-                  <NavItem eventKey="noticeboard">
+                  <NavItem
+                    eventKey="holidays"
+                    active={activeLink === "holidays"}
+                    onSelect={(selected) => setActiveLink(selected)}
+                  >
                     <NavIcon>
                       <i
-                        className="fa fa-fw fa-coffee"
+                        className="fa fa-fw fa-mug-hot"
                         style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "holidays" ? "#EB9B20" : "#00a14b",
                         }}
                       />
                     </NavIcon>
@@ -171,14 +194,18 @@ const Layout = (props) => {
                   </NavItem>
                 </Link>
                 <Link href="/leaves">
-                  <NavItem eventKey="leaves">
+                  <NavItem
+                    eventKey="leaves"
+                    onSelect={(selected) => setActiveLink(selected)}
+                    active={activeLink === "leaves"}
+                  >
                     <NavIcon>
                       <i
-                        className="fa fa-fw fa-sign-out"
+                        className="fa fa-fw fa-walking"
                         style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "leaves" ? "#EB9B20" : "#00a14b",
                         }}
                       />
                     </NavIcon>
@@ -186,18 +213,60 @@ const Layout = (props) => {
                   </NavItem>
                 </Link>
                 <Link href="/payslips">
-                  <NavItem eventKey="payslips">
+                  <NavItem
+                    eventKey="payslips"
+                    onSelect={(selected) => setActiveLink(selected)}
+                    active={activeLink === "payslips"}
+                  >
                     <NavIcon>
                       <i
-                        className="fa fa-fw fa-usd"
+                        className="fa fa-fw fa-money-check-alt"
                         style={{
-                          fontSize: "1.5em",
-                          color: "#EB9B20",
-                          opacity: 1,
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "payslips" ? "#EB9B20" : "#00a14b",
                         }}
                       />
                     </NavIcon>
                     <NavText>Payslips</NavText>
+                  </NavItem>
+                </Link>
+                <Link href="/grievances">
+                  <NavItem
+                    eventKey="grievances"
+                    onSelect={(selected) => setActiveLink(selected)}
+                    active={activeLink === "grievances"}
+                  >
+                    <NavIcon>
+                      <i
+                        className="fa fa-fw fa-envelope-open-text"
+                        style={{
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "grievances" ? "#EB9B20" : "#00a14b",
+                        }}
+                      />
+                    </NavIcon>
+                    <NavText>Grievances</NavText>
+                  </NavItem>
+                </Link>
+                <Link href="/policies">
+                  <NavItem
+                    eventKey="policies"
+                    onSelect={(selected) => setActiveLink(selected)}
+                    active={activeLink === "policies"}
+                  >
+                    <NavIcon>
+                      <i
+                        className="fa fa-fw fa-file-contract"
+                        style={{
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "policies" ? "#EB9B20" : "#00a14b",
+                        }}
+                      />
+                    </NavIcon>
+                    <NavText>Policies</NavText>
                   </NavItem>
                 </Link>
               </SideNav.Nav>
@@ -210,6 +279,14 @@ const Layout = (props) => {
           <Container fluid>{props.children}</Container>
         </div>
       </div>
+      <style jsx>{`
+        .navbar-dark .navbar-nav .nav-link {
+          color: #ffffff !important;
+        }
+        .content-wrapper {
+          margin-top: 72px;
+        }
+      `}</style>
     </div>
   );
 };
