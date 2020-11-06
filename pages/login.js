@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from "reactstrap";
+import Link from "next/link";
+import { Container, Row, Col, Button, FormGroup, Label } from "reactstrap";
+import { useForm } from "react-hook-form";
 import { login } from "../lib/auth";
 import AppContext from "../context/AppContext";
 
@@ -20,6 +13,7 @@ function Login(props) {
   const router = useRouter();
   const appContext = useContext(AppContext);
   const { user, setUser } = useContext(AppContext);
+  const { register, handleSubmit, errors } = useForm();
 
   useEffect(() => {
     if (appContext.isAuthenticated) {
@@ -30,6 +24,22 @@ function Login(props) {
   function onChange(event) {
     updateData({ ...data, [event.target.name]: event.target.value });
   }
+
+  const onSubmit = (data) => {
+    setLoading(true);
+    login(data.identifier, data.password)
+      .then((res) => {
+        setLoading(false);
+        // set authed User in global context to access in state
+        appContext.setUser(res.data.user);
+      })
+      .catch((error) => {
+        if (error.response.data) {
+          setError(error.response.data);
+        }
+        setLoading(false);
+      });
+  };
 
   return (
     <Container>
@@ -56,56 +66,53 @@ function Login(props) {
                     </div>
                   );
                 })}
-              <Form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset disabled={loading}>
                   <FormGroup>
-                    <Label>Email:</Label>
-                    <Input
+                    <Label>Email</Label>
+                    <input
                       onChange={(event) => onChange(event)}
                       name="identifier"
+                      className="form-control"
                       style={{ height: 55, fontSize: "1.2em" }}
+                      ref={register({ required: true })}
                     />
+                    {errors.identifier && (
+                      <span className="err-msg">* Email is required</span>
+                    )}
                   </FormGroup>
                   <FormGroup style={{ marginBottom: 30 }}>
-                    <Label>Password:</Label>
-                    <Input
+                    <Label>Password</Label>
+                    <input
                       onChange={(event) => onChange(event)}
                       type="password"
                       name="password"
+                      className="form-control"
                       style={{ height: 55, fontSize: "1.2em" }}
+                      ref={register({ required: true })}
                     />
+                    {errors.password && (
+                      <span className="err-msg">* Password is required</span>
+                    )}
                   </FormGroup>
 
                   <FormGroup>
-                    {/* <span>
-                      <a href="">
-                        <small>Forgot Password?</small>
-                      </a>
-                    </span> */}
+                    <span>
+                      <Link href="/password_reset">
+                        <a>
+                          <small>Forgot Password?</small>
+                        </a>
+                      </Link>
+                    </span>
                     <Button
                       style={{ float: "right", width: 120 }}
                       color="primary"
-                      onClick={() => {
-                        setLoading(true);
-                        login(data.identifier, data.password)
-                          .then((res) => {
-                            setLoading(false);
-                            // set authed User in global context to access in state
-                            appContext.setUser(res.data.user);
-                          })
-                          .catch((error) => {
-                            if (error.response.data) {
-                              setError(error.response.data);
-                            }
-                            setLoading(false);
-                          });
-                      }}
                     >
                       {loading ? "Loading... " : "Login"}
                     </Button>
                   </FormGroup>
                 </fieldset>
-              </Form>
+              </form>
             </section>
           </div>
         </Col>
