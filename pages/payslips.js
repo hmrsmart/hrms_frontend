@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import Cookie from "js-cookie";
+import { Spinner } from "reactstrap";
 import { useRouter } from "next/router";
 import FileSaver from "file-saver";
 import AppContext from "../context/AppContext";
@@ -47,7 +48,7 @@ const Payslips = () => {
 
   return (
     <div className="container-fluid d-flex justify-conent-center flex-column">
-      <h2 className="py-3">Pay Slips</h2>
+      <h3 className="py-3 title-text">Pay Slips</h3>
 
       <table className="table table-striped">
         <thead>
@@ -61,7 +62,7 @@ const Payslips = () => {
           {isLoading && (
             <tr>
               <td colSpan="3" className="text-center py-5">
-                Loading . . .
+                <Spinner color="success" />
               </td>
             </tr>
           )}
@@ -79,6 +80,7 @@ const Payslips = () => {
                         name={`Payslip_${payslip.Month}_${payslip.Year}.pdf`}
                         href={payslip.Payslip[0].url}
                         onClick={downoladFile}
+                        className="pay_link"
                         download
                       >
                         Download
@@ -96,6 +98,25 @@ const Payslips = () => {
               )}
         </tbody>
       </table>
+      <style jsx>
+        {`
+          th {
+            color: #00a14b;
+          }
+          td {
+            color: #454545;
+          }
+          tbody tr:nth-child(odd) {
+            background-color: #a8d7a8;
+          }
+          tbody tr:nth-child(even) {
+            background-color: #cbe7cb;
+          }
+          .pay_link {
+            color: #252525;
+          }
+        `}
+      </style>
     </div>
   );
 };
