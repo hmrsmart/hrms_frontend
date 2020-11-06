@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { Document, Page } from "react-pdf";
 // import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
-import { PDFReader } from "reactjs-pdf-reader";
+// import { PDFReader } from "reactjs-pdf-reader";
 
 function Policies() {
   //   const [numPages, setNumPages] = useState(null);
