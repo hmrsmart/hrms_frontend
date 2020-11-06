@@ -41,23 +41,52 @@ function PasswordUpdate(props) {
       data.passwordConfirmation !== "" &&
       data.passwordConfirmation == data.password
     ) {
+      var formdata = new FormData();
+      formdata.append("code", code);
+      formdata.append("password", data.password);
+      formdata.append("passwordConfirmation", data.passwordConfirmation);
       setLoading(true);
-      axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
-          code: code,
-          password: data.password,
-          passwordConfirmation: data.passwordConfirmation,
-        })
-        .then((res) => {
-          if (!res.ok) {
-            throw Error(res.statusText);
+
+      var requestOptions = {
+        method: "POST",
+        body: formdata,
+        redirect: "follow",
+      };
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
+        requestOptions
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw Error(response.statusText);
           }
-          setLoading(true);
+          setLoading(false);
           setSuccess(true);
+          return response.json();
         })
+        .then((result) => console.log(result))
         .catch((error) => {
+          setLoading(false);
           console.log(error);
+          setError(true);
         });
+
+      // axios
+      //   .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
+      //     code: code,
+      //     password: data.password,
+      //     passwordConfirmation: data.passwordConfirmation,
+      //   })
+      //   .then((res) => {
+      //     console.log(res);
+      //     setLoading(false);
+      //     setSuccess(true);
+      //   })
+      //   .catch((error) => {
+      //     setLoading(false);
+      //     console.log(error);
+      //     setError(true);
+      //   });
     }
   }
   return (
@@ -72,6 +101,11 @@ function PasswordUpdate(props) {
                 </h3>
               </div>
               <section className="wrapper">
+                {error && (
+                  <p className="text-danger text-sm">
+                    Something went wrong, try again
+                  </p>
+                )}
                 {Object.entries(error).length !== 0 &&
                   error.constructor === Object &&
                   error.message.map((error) => {
@@ -117,7 +151,7 @@ function PasswordUpdate(props) {
                           resetPassword();
                         }}
                       >
-                        {loading ? "Loading... " : "Update"}
+                        {loading ? "Updating... " : "Update"}
                       </Button>
                     </FormGroup>
                   </fieldset>
