@@ -7,7 +7,15 @@ function Policies() {
     <Container fluid className="py-4">
       <h4 className="py-4 title-text">ZYCLYX Policies </h4>
       <ul className="policies">
-        <li>
+        <li className="py-2">
+          <Link href="./employee_handbook">
+            <a>
+              <i className="fas fa-file-signature mr-2 text-primary" />
+              Employee Handbook
+            </a>
+          </Link>
+        </li>
+        <li className="py-2">
           <Link href="./code_of_conduct">
             <a>
               <i className="fas fa-file-signature mr-2 text-primary" />
