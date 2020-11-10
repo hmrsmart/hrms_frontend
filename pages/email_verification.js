@@ -25,6 +25,9 @@ function EmailVerification() {
       requestOptions
     )
       .then((response) => {
+        if (!response.ok) {
+          throw Error(res.statusText);
+        }
         return response.json();
       })
       .then((result) => {
@@ -34,9 +37,6 @@ function EmailVerification() {
             type: "manual",
             message: result.message[0].messages[0].message,
           });
-        }
-        if (!res.ok) {
-          throw Error(res.statusText);
         }
         setHasSuccess(true);
       })
