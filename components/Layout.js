@@ -105,7 +105,7 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                     active={activeLink === "home"}
                   >
-                    <NavIcon>
+                    <NavIcon title="Home">
                       <i
                         className="fa fa-fw fa-home"
                         style={{
@@ -123,7 +123,7 @@ const Layout = (props) => {
                     active={activeLink === "profile"}
                     onSelect={(selected) => setActiveLink(selected)}
                   >
-                    <NavIcon>
+                    <NavIcon title="My Profile">
                       <i
                         className="fa fa-fw fa-address-card"
                         style={{
@@ -142,7 +142,7 @@ const Layout = (props) => {
                     active={activeLink === "tasks"}
                     onSelect={(selected) => setActiveLink(selected)}
                   >
-                    <NavIcon>
+                    <NavIcon title="Tasks">
                       <i
                         className="fa fa-fw fa-tasks"
                         style={{
@@ -161,7 +161,7 @@ const Layout = (props) => {
                     active={activeLink === "attendance"}
                     onSelect={(selected) => setActiveLink(selected)}
                   >
-                    <NavIcon>
+                    <NavIcon title="Attendance">
                       <i
                         className="fa fa-fw fa-clock-o"
                         style={{
@@ -180,7 +180,7 @@ const Layout = (props) => {
                     active={activeLink === "holidays"}
                     onSelect={(selected) => setActiveLink(selected)}
                   >
-                    <NavIcon>
+                    <NavIcon title="Holidays">
                       <i
                         className="fa fa-fw fa-mug-hot"
                         style={{
@@ -199,7 +199,7 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                     active={activeLink === "leaves"}
                   >
-                    <NavIcon>
+                    <NavIcon title="Leaves">
                       <i
                         className="fa fa-fw fa-walking"
                         style={{
@@ -218,7 +218,7 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                     active={activeLink === "payslips"}
                   >
-                    <NavIcon>
+                    <NavIcon title="Payslips">
                       <i
                         className="fa fa-fw fa-money-check-alt"
                         style={{
@@ -237,7 +237,7 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                     active={activeLink === "grievances"}
                   >
-                    <NavIcon>
+                    <NavIcon title="Grievances">
                       <i
                         className="fa fa-fw fa-envelope-open-text"
                         style={{
@@ -256,7 +256,7 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                     active={activeLink === "policies"}
                   >
-                    <NavIcon>
+                    <NavIcon title="Policies">
                       <i
                         className="fa fa-fw fa-file-contract"
                         style={{
