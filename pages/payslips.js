@@ -49,60 +49,59 @@ const Payslips = () => {
   return (
     <div className="container-fluid d-flex justify-conent-center flex-column">
       <h3 className="py-3 title-text">Pay Slips</h3>
-
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">SNO</th>
-            <th scope="col">Month & Year</th>
-            <th scope="col">PaySlip</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading && (
+      <div className="container">
+        <table className="table table-striped">
+          <thead className="bg-success text-dark">
             <tr>
-              <td colSpan="3" className="text-center py-5">
-                <Spinner color="success" />
-              </td>
+              <th scope="col">SNO</th>
+              <th scope="col">Month & Year</th>
+              <th scope="col">PaySlip</th>
             </tr>
-          )}
-          {payslips.length !== 0
-            ? payslips.map((payslip, index) => {
-                return (
-                  <tr key={payslip.month + index}>
-                    <th scope="row">{index + 1}</th>
-                    <td>
-                      {payslip.Month} - {payslip.Year}
-                    </td>
-                    <td>
-                      {" "}
-                      <a
-                        name={`Payslip_${payslip.Month}_${payslip.Year}.pdf`}
-                        href={payslip.Payslip[0].url}
-                        onClick={downoladFile}
-                        className="pay_link"
-                        download
-                      >
-                        Download
-                      </a>
+          </thead>
+          <tbody>
+            {isLoading && (
+              <tr>
+                <td colSpan="3" className="text-center py-5">
+                  <Spinner color="success" />
+                </td>
+              </tr>
+            )}
+            {payslips.length !== 0
+              ? payslips.map((payslip, index) => {
+                  return (
+                    <tr key={payslip.Month + index}>
+                      <th scope="row">{index + 1}</th>
+                      <td>
+                        {payslip.Month} - {payslip.Year}
+                      </td>
+                      <td>
+                        {" "}
+                        <a
+                          name={`Payslip_${payslip.Month}_${payslip.Year}.pdf`}
+                          href={payslip.Payslip[0].url}
+                          onClick={downoladFile}
+                          className="pay_link btn btn-success"
+                          download
+                        >
+                          <i className="fa fa-fw fa-download mr-2 text-dark" />
+                          Download
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                })
+              : !isLoading && (
+                  <tr>
+                    <td colSpan="8" className="text-center py-5">
+                      There are no Pay slips
                     </td>
                   </tr>
-                );
-              })
-            : !isLoading && (
-                <tr>
-                  <td colSpan="8" className="text-center py-5">
-                    There are no Pay slips
-                  </td>
-                </tr>
-              )}
-        </tbody>
-      </table>
+                )}
+          </tbody>
+        </table>
+      </div>
       <style jsx>
         {`
-          th {
-            color: #00a14b;
-          }
           td {
             color: #454545;
           }
