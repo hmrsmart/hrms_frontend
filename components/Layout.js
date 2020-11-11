@@ -19,6 +19,7 @@ import {
   DropdownItem,
   NavbarText,
 } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Container } from "reactstrap";
 
 const Layout = (props) => {
@@ -106,8 +107,8 @@ const Layout = (props) => {
                     active={activeLink === "home"}
                   >
                     <NavIcon title="Home">
-                      <i
-                        className="fa fa-fw fa-home"
+                      <FontAwesomeIcon
+                        icon={["fas", "home"]}
                         style={{
                           fontSize: "1.3em",
                           color: activeLink === "home" ? "#EB9B20" : "#00a14b",
@@ -124,8 +125,8 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                   >
                     <NavIcon title="My Profile">
-                      <i
-                        className="fa fa-fw fa-address-card"
+                      <FontAwesomeIcon
+                        icon={["fas", "address-card"]}
                         style={{
                           fontSize: "1.3em",
                           color:
@@ -143,8 +144,8 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                   >
                     <NavIcon title="Tasks">
-                      <i
-                        className="fa fa-fw fa-tasks"
+                      <FontAwesomeIcon
+                        icon={["fas", "tasks"]}
                         style={{
                           fontSize: "1.3em",
                           color: activeLink === "tasks" ? "#EB9B20" : "#00a14b",
@@ -162,8 +163,8 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                   >
                     <NavIcon title="Attendance">
-                      <i
-                        className="fa fa-fw fa-clock-o"
+                      <FontAwesomeIcon
+                        icon={["fas", "clock"]}
                         style={{
                           fontSize: "1.3em",
                           color:
@@ -181,8 +182,8 @@ const Layout = (props) => {
                     onSelect={(selected) => setActiveLink(selected)}
                   >
                     <NavIcon title="Holidays">
-                      <i
-                        className="fa fa-fw fa-mug-hot"
+                      <FontAwesomeIcon
+                        icon={["fas", "mug-hot"]}
                         style={{
                           fontSize: "1.3em",
                           color:
@@ -200,8 +201,8 @@ const Layout = (props) => {
                     active={activeLink === "leaves"}
                   >
                     <NavIcon title="Leaves">
-                      <i
-                        className="fa fa-fw fa-walking"
+                      <FontAwesomeIcon
+                        icon={["fas", "walking"]}
                         style={{
                           fontSize: "1.3em",
                           color:
@@ -219,8 +220,8 @@ const Layout = (props) => {
                     active={activeLink === "payslips"}
                   >
                     <NavIcon title="Payslips">
-                      <i
-                        className="fa fa-fw fa-money-check-alt"
+                      <FontAwesomeIcon
+                        icon={["fas", "money-check-alt"]}
                         style={{
                           fontSize: "1.3em",
                           color:
@@ -238,8 +239,8 @@ const Layout = (props) => {
                     active={activeLink === "grievances"}
                   >
                     <NavIcon title="Grievances">
-                      <i
-                        className="fa fa-fw fa-envelope-open-text"
+                      <FontAwesomeIcon
+                        icon={["fas", "envelope-open-text"]}
                         style={{
                           fontSize: "1.3em",
                           color:
@@ -257,8 +258,8 @@ const Layout = (props) => {
                     active={activeLink === "policies"}
                   >
                     <NavIcon title="Policies">
-                      <i
-                        className="fa fa-fw fa-file-contract"
+                      <FontAwesomeIcon
+                        icon={["fas", "file-contract"]}
                         style={{
                           fontSize: "1.3em",
                           color:

@@ -3,6 +3,20 @@ import App from "next/app";
 import Head from "next/head";
 import Cookie from "js-cookie";
 import fetch from "isomorphic-fetch";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faHome,
+  faAddressCard,
+  faTasks,
+  faClock,
+  faMugHot,
+  faWalking,
+  faMoneyCheckAlt,
+  faEnvelopeOpenText,
+  faFileContract,
+  faFileSignature,
+  faDownload,
+} from "@fortawesome/free-solid-svg-icons";
 import Layout from "../components/Layout";
 import AppContext from "../context/AppContext";
 import withData from "../lib/apollo";
@@ -10,6 +24,20 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "../styles/style.css";
 import "../styles/layout.css";
 
+library.add(
+  faHome,
+  faAddressCard,
+  faTasks,
+  faClock,
+  faMugHot,
+  faWalking,
+  faMoneyCheckAlt,
+  faEnvelopeOpenText,
+  faFileContract,
+  faFileSignature,
+  faFileSignature,
+  faDownload
+);
 class MyApp extends App {
   state = {
     user: null,
@@ -68,6 +96,10 @@ class MyApp extends App {
             src="https://kit.fontawesome.com/f3f3fd1f55.js"
             crossorigin="anonymous"
           ></script>
+          {/* <link
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            rel="stylesheet"
+          /> */}
           <link
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
             rel="stylesheet"

@@ -3,6 +3,7 @@ import Cookie from "js-cookie";
 import { Spinner } from "reactstrap";
 import { useRouter } from "next/router";
 import FileSaver from "file-saver";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppContext from "../context/AppContext";
 import { getDay } from "../lib/date";
 
@@ -83,7 +84,10 @@ const Payslips = () => {
                           className="pay_link btn btn-success"
                           download
                         >
-                          <i className="fa fa-fw fa-download mr-2 text-dark" />
+                          <FontAwesomeIcon
+                            icon={["fas", "download"]}
+                            className="mr-2 text-dark"
+                          />
                           Download
                         </a>
                       </td>

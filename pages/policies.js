@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Container } from "reactstrap";
 
 function Policies() {
@@ -10,7 +11,10 @@ function Policies() {
         <li className="py-2">
           <Link href="./employee_handbook">
             <a>
-              <i className="fas fa-file-signature mr-2 text-primary" />
+              <FontAwesomeIcon
+                icon={["fas", "file-signature"]}
+                className="mr-2 text-primary"
+              />
               Employee Handbook
             </a>
           </Link>
@@ -18,7 +22,10 @@ function Policies() {
         <li className="py-2">
           <Link href="./code_of_conduct">
             <a>
-              <i className="fas fa-file-signature mr-2 text-primary" />
+              <FontAwesomeIcon
+                icon={["fas", "file-signature"]}
+                className="mr-2 text-primary"
+              />
               Code of Conduct Policy
             </a>
           </Link>

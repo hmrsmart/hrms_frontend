@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 import { FormGroup, Label, Input } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function CodeOfConduct() {
   const { register, handleSubmit, errors } = useForm();
@@ -106,7 +107,7 @@ function CodeOfConduct() {
               name="zyclyx_employee_handbook"
               onClick={downoladFile}
             >
-              <i className="fa fa-fw fa-download mr-2" />
+              <FontAwesomeIcon icon={["fas", "download"]} className="mr-2" />
               Download Document
             </a>
           </Link>
