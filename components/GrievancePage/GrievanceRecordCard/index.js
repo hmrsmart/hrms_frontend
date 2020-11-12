@@ -5,7 +5,7 @@ import { Card, CardHeader, CardBody, Badge, Row, Col } from "reactstrap";
 const GrievanceRecordCard = ({ data }) => {
   console.log(data);
   return (
-    <Card>
+    <Card className="my-3">
       <CardHeader className="d-flex justify-content-between">
         <p className="mb-0">
           <span className="text-muted mr-3">Complaint Date</span>
