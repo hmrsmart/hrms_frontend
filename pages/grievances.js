@@ -174,7 +174,7 @@ const Grievances = () => {
     <Container fluid>
       <h1 className="title-text py-3">Grievances</h1>
       {/* Grievance Form */}
-      <Container className="shadow shadow-sm rounded rounded-lg py-2">
+      {/* <Container className="shadow shadow-sm rounded rounded-lg py-2">
         <h2 className="title-text-2 text-center py-5">
           Employee Grievance Form
         </h2>
@@ -204,13 +204,7 @@ const Grievances = () => {
               <FormGroup className="py-3 mx-2">
                 <Label for="date" className="text-muted">
                   <span className="text-danger mr-1">*</span> Date and Time
-                </Label>
-                {/* <Input
-                type="date"
-                name="date"
-                id="date"
-                innerRef={register({ required: true })}
-              /> */}
+                </Label> 
                 <Datetime
                   ref={register({ required: true })}
                   inputProps={{
@@ -301,7 +295,7 @@ const Grievances = () => {
             </Col>
           </Row>
         </Form>
-      </Container>
+      </Container> */}
       {/* Grievance History */}
       <Container className="py-5">
         <h2 className="title-text-2 text-center py-3">Grievance History</h2>
