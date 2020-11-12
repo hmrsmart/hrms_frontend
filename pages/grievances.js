@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Container } from "reactstrap";
-import { useForm } from "react-hook-form";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";

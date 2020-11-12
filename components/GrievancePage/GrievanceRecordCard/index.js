@@ -19,26 +19,22 @@ const GrievanceRecordCard = ({ data }) => {
         </p>
 
         <Badge color={data.Status === "Active" ? "warning" : "success"}>
-          Active
+          {data.Status === "Active" ? "Active" : "Resolved"}
         </Badge>
       </CardHeader>
       <CardBody>
         <div>
           <Row>
-            {/* <Col lg={6}>
-              <p className="d-flex flex-column">
-                <span className="text-muted py-2">Date and Time of Event </span>
-                <span>
-                  {moment(data.Event_Time_Date).format(
-                    "MMMM Do YYYY, h:mm:ss a"
-                  )}
-                </span>
-              </p>
-            </Col> */}
             <Col lg={6}>
               <p className="d-flex flex-column">
                 <span className="text-muted py-2">Place of Event</span>
                 <span>{data.Place_Of_Event}</span>
+              </p>
+            </Col>
+            <Col lg={6}>
+              <p className="d-flex flex-column">
+                <span className="text-muted py-2">Witness</span>
+                <span>{data.Witness}</span>
               </p>
             </Col>
           </Row>
