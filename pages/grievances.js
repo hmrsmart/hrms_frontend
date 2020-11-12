@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Datetime from "react-datetime";
+// import Datetime from "react-datetime";
 import moment from "moment";
 import {
   Container,
@@ -136,7 +136,7 @@ const Grievances = () => {
         Violations: data.Violations,
         user: user,
       };
-      console.log(user.username);
+
       setFormSubmitLoading(true);
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/grievances`, {
         method: "post",
@@ -174,7 +174,7 @@ const Grievances = () => {
     <Container fluid>
       <h1 className="title-text py-3">Grievances</h1>
       {/* Grievance Form */}
-      {/* <Container className="shadow shadow-sm rounded rounded-lg py-2">
+      <Container className="shadow shadow-sm rounded rounded-lg py-2">
         <h2 className="title-text-2 text-center py-5">
           Employee Grievance Form
         </h2>
@@ -201,10 +201,10 @@ const Grievances = () => {
             </Col>
 
             <Col lg={3} md={8}>
-              <FormGroup className="py-3 mx-2">
+              {/* <FormGroup className="py-3 mx-2">
                 <Label for="date" className="text-muted">
                   <span className="text-danger mr-1">*</span> Date and Time
-                </Label> 
+                </Label>
                 <Datetime
                   ref={register({ required: true })}
                   inputProps={{
@@ -214,6 +214,21 @@ const Grievances = () => {
                   }}
                   onChange={handleGrievanceDateChange}
                   value={grievanceDate}
+                />
+                {errors.date && (
+                  <span className="err-msg">* Place of event is required</span>
+                )}
+              </FormGroup> */}
+              <FormGroup className="py-3 mx-2">
+                <Label for="date" className="text-muted">
+                  <span className="text-danger mr-1">*</span> Date and Time
+                </Label>
+                <Input
+                  type="text"
+                  name="date"
+                  id="date"
+                  autoComplete="off"
+                  innerRef={register({ required: true })}
                 />
                 {errors.date && (
                   <span className="err-msg">* Place of event is required</span>
@@ -251,7 +266,9 @@ const Grievances = () => {
                   innerRef={register({ required: true })}
                 />
                 {errors.Account_of_Event && (
-                  <span className="err-msg">* Place of event is required</span>
+                  <span className="err-msg">
+                    * Please provide grievance details
+                  </span>
                 )}
                 <p>
                   <small className="text-muted">
@@ -274,8 +291,8 @@ const Grievances = () => {
                   rows="4"
                   innerRef={register({ required: true })}
                 />
-                {errors.violations && (
-                  <span className="err-msg">* Place of event is required</span>
+                {errors.Violations && (
+                  <span className="err-msg">*violations details required</span>
                 )}
                 <p>
                   <small className="text-muted">
@@ -295,7 +312,7 @@ const Grievances = () => {
             </Col>
           </Row>
         </Form>
-      </Container> */}
+      </Container>
       {/* Grievance History */}
       <Container className="py-5">
         <h2 className="title-text-2 text-center py-3">Grievance History</h2>
