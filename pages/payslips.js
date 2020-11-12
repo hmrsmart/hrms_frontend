@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppContext from "../context/AppContext";
 import { getDay } from "../lib/date";
 
+// TODO : Refactor code
+
 const Payslips = () => {
   const [payslips, setPaySlips] = useState([]);
   const [isLoading, setLoading] = useState(true);

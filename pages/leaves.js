@@ -54,7 +54,6 @@ const LeaveRequest = (props) => {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
           data.length !== 0 && setBalance(data);
         })
         .catch((error) => {

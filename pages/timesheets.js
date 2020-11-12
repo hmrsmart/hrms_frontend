@@ -12,14 +12,13 @@ const Timesheet = () => {
   const { user } = useContext(AppContext);
   const appContext = useContext(AppContext);
   const router = useRouter();
-  console.log(user);
+
   useEffect(() => {
     if (!appContext.isAuthenticated) {
       router.push("/login"); // redirect if user not logged in
     }
 
     const token = Cookie.get("token");
-    console.log(token);
     if (token && user) {
       fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/timesheets?user.id=${user.id}`,

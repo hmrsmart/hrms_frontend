@@ -22,3 +22,7 @@
   z-index: 999;
   position: relative;
 }
+.form-control {
+  border: 1px solid #abf5a3;
+  min-height: 50px;
+}

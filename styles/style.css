@@ -2,6 +2,7 @@ body {
   font-family: "Roboto", sans-serif;
   background-color: #f6f7fa;
   color: #111b33;
+  line-height: 1.2;
 }
 .title-text {
   color: #00a14b;
