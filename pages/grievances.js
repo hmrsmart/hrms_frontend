@@ -3,7 +3,7 @@ import { Container } from "reactstrap";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
-// import GrievanceForm from "../components/GrievancePage/GrievanceForm";
+import GrievanceForm from "../components/GrievancePage/GrievanceForm";
 // import GrievanceRecords from "../components/GrievancePage/GrievanceRecords";
 
 const Grievances = () => {
@@ -51,11 +51,11 @@ const Grievances = () => {
     <Container fluid>
       <h1 className="title-text py-3">Grievances</h1>
       {/* Grievance Form */}
-      {/* <GrievanceForm
+      <GrievanceForm
         user={user}
         token={token}
         handleGrievanceFormResponse={handleGrievanceFormResponse}
-      /> */}
+      />
       {/* Grievance History */}
       {/* <GrievanceRecords grievanceHistoryData={grievanceHistoryData} /> */}
     </Container>
