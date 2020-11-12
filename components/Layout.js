@@ -270,6 +270,25 @@ const Layout = (props) => {
                     <NavText>Policies</NavText>
                   </NavItem>
                 </Link>
+                <Link href="/careers">
+                  <NavItem
+                    eventKey="careers"
+                    onSelect={(selected) => setActiveLink(selected)}
+                    active={activeLink === "careers"}
+                  >
+                    <NavIcon title="careers">
+                      <FontAwesomeIcon
+                        icon={["fas", "briefcase"]}
+                        style={{
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "careers" ? "#EB9B20" : "#00a14b",
+                        }}
+                      />
+                    </NavIcon>
+                    <NavText>Careers</NavText>
+                  </NavItem>
+                </Link>
               </SideNav.Nav>
             </SideNav>
           </div>

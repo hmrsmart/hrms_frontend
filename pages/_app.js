@@ -16,6 +16,7 @@ import {
   faFileContract,
   faFileSignature,
   faDownload,
+  faBriefcase,
 } from "@fortawesome/free-solid-svg-icons";
 import Layout from "../components/Layout";
 import AppContext from "../context/AppContext";
@@ -37,7 +38,8 @@ library.add(
   faFileContract,
   faFileSignature,
   faFileSignature,
-  faDownload
+  faDownload,
+  faBriefcase
 );
 class MyApp extends App {
   state = {
