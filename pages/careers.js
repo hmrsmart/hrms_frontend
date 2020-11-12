@@ -12,9 +12,9 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import JobOpeningCard from "../components/JobOpeningCard";
-import JobApplicantCard from "../components/JobApplicantCard";
-import JobPostingForm from "../components/JobPostingForm";
+import JobOpeningCard from "../components/careersPage/JobOpeningCard";
+import JobApplicantCard from "../components/careersPage/JobApplicantCard";
+import JobPostingForm from "../components/careersPage/JobPostingForm";
 
 const Careers = () => {
   const [activeTab, setActiveTab] = useState("1");
