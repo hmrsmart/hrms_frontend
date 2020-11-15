@@ -17,6 +17,7 @@ import {
   faFileSignature,
   faDownload,
   faBriefcase,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 import Layout from "../components/Layout";
 import AppContext from "../context/AppContext";
@@ -39,7 +40,8 @@ library.add(
   faFileSignature,
   faFileSignature,
   faDownload,
-  faBriefcase
+  faBriefcase,
+  faAddressBook
 );
 class MyApp extends App {
   state = {
@@ -57,7 +59,7 @@ class MyApp extends App {
         },
       })
         .then(async (res) => {
-          this.setState({ isPageLoading: false });
+          // this.setState({ isPageLoading: false });
           if (!res.ok) {
             Cookie.remove("token");
             this.setState({ user: null });

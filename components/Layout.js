@@ -278,7 +278,7 @@ const Layout = (props) => {
                   >
                     <NavIcon title="careers">
                       <FontAwesomeIcon
-                        icon={["fas", "briefcase"]}
+                        icon={["fas", "address-book"]}
                         style={{
                           fontSize: "1.3em",
                           color:
@@ -287,6 +287,25 @@ const Layout = (props) => {
                       />
                     </NavIcon>
                     <NavText>Careers</NavText>
+                  </NavItem>
+                </Link>
+                <Link href="/inquiries">
+                  <NavItem
+                    eventKey="inquiries"
+                    onSelect={(selected) => setActiveLink(selected)}
+                    active={activeLink === "inquiries"}
+                  >
+                    <NavIcon title="inquiries">
+                      <FontAwesomeIcon
+                        icon={["fas", "briefcase"]}
+                        style={{
+                          fontSize: "1.3em",
+                          color:
+                            activeLink === "inquiries" ? "#EB9B20" : "#00a14b",
+                        }}
+                      />
+                    </NavIcon>
+                    <NavText>Inquiries</NavText>
                   </NavItem>
                 </Link>
               </SideNav.Nav>

@@ -1,32 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   TabContent,
   TabPane,
   Nav,
   NavItem,
   NavLink,
-  Card,
-  Button,
-  CardTitle,
-  CardText,
-  Row,
-  Col,
+  Container,
 } from "reactstrap";
 import JobOpeningCard from "../components/careersPage/JobOpeningCard";
 import JobApplicantCard from "../components/careersPage/JobApplicantCard";
 import JobPostingForm from "../components/careersPage/JobPostingForm";
+import Cookie from "js-cookie";
+import { Spinner } from "reactstrap";
+import { useRouter } from "next/router";
+import AppContext from "../context/AppContext";
 
 const Careers = () => {
+  const token = Cookie.get("token");
   const [activeTab, setActiveTab] = useState("1");
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+  const { user } = useContext(AppContext);
+  const [jobOpeningsData, setJobOpeningsData] = useState(null);
+  const [jobApplicationsData, setJobApplicationsData] = useState(null);
+
+  // Get Job Openings
+  useState(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-openings`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then((resJSON) => {
+        console.log(resJSON);
+        setJobOpeningsData(resJSON);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // Get JOB Applications
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-applications`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then((resJSON) => {
+        console.log(resJSON);
+        setJobApplicationsData(resJSON);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <div>
       <Nav tabs className="py-4">
         <NavItem>
           <NavLink
-            className={{ active: activeTab === "1" }}
             onClick={() => {
               toggle("1");
             }}
@@ -36,7 +80,6 @@ const Careers = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            className={{ active: activeTab === "2" }}
             onClick={() => {
               toggle("2");
             }}
@@ -46,7 +89,6 @@ const Careers = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            className={{ active: activeTab === "3" }}
             onClick={() => {
               toggle("3");
             }}
@@ -57,10 +99,20 @@ const Careers = () => {
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <JobOpeningCard />
+          <Container>
+            {jobOpeningsData &&
+              jobOpeningsData.map((data) => {
+                return <JobOpeningCard data={data} />;
+              })}
+          </Container>
         </TabPane>
         <TabPane tabId="2">
-          <JobApplicantCard />
+          <Container>
+            {jobApplicationsData &&
+              jobApplicationsData.map((data) => {
+                return <JobApplicantCard data={data} />;
+              })}
+          </Container>
         </TabPane>
         <TabPane tabId="3">
           <JobPostingForm />

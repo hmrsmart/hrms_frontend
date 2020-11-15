@@ -22,7 +22,6 @@ import AppContext from "../context/AppContext";
 // TODO : Refactor code
 
 const GrievanceRecordCard = ({ data }) => {
-  console.log(data);
   return (
     <Card className="my-3">
       <CardHeader className="d-flex justify-content-between">
