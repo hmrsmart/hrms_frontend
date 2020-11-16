@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Container } from "reactstrap";
 import DataTable from "react-data-table-component";
 import moment from "moment";
-// import Cookie from "js-cookie";
-// import AppContext from "../context/AppContext";
+import Cookie from "js-cookie";
+import AppContext from "../context/AppContext";
 
 const columns = [
   {
@@ -49,46 +49,52 @@ const ExpandableComponent = ({ data }) => {
   );
 };
 
-const Inquiries = ({ data }) => {
-  console.log(data);
+const Inquiries = () => {
+  const token = Cookie.get("token");
+  const [inquiriesData, setInquiriesData] = useState(null);
+  useEffect(() => {
+    // Get JOB Applications
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/business-enquiries`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then((resJSON) => {
+        console.log(resJSON);
+        setInquiriesData(resJSON);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <Container fluid>
       {/* <h1 className="title-text py-3">Inquiries</h1> */}
       <Container className="py-3">
-        <DataTable
-          title="Business Inquiries"
-          striped
-          highlightOnHover
-          pointerOnHover
-          pagination
-          columns={columns}
-          data={data}
-          expandableRows
-          expandOnRowClicked
-          expandableRowsComponent={<ExpandableComponent />}
-        />
+        {inquiriesData && (
+          <DataTable
+            title="Business Inquiries"
+            striped
+            highlightOnHover
+            pointerOnHover
+            pagination
+            columns={columns}
+            data={inquiriesData}
+            expandableRows
+            expandOnRowClicked
+            expandableRowsComponent={<ExpandableComponent />}
+          />
+        )}
       </Container>
     </Container>
   );
 };
 
-export async function getServerSideProps(ctx) {
-  // Fetch data from API
-  const token = ctx.req.headers.cookie
-    ? ctx.req.headers.cookie.split(" ")[1].replace("token=", "")
-    : undefined;
-  const res = await fetch(
-    "https://admin-zyclyx.herokuapp.com/business-enquiries",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  const data = await res.json();
-
-  // Pass data to the page via props
-
-  return { props: { data } };
-}
 export default Inquiries;

@@ -31,9 +31,7 @@ import { Spinner } from "reactstrap";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 
-const Careers = ({ openingsData, applicationsData }) => {
-  console.log(openingsData);
-  console.log(applicationsData);
+const Careers = () => {
   const token = Cookie.get("token");
   const [activeTab, setActiveTab] = useState("1");
   const toggle = (tab) => {
@@ -140,32 +138,4 @@ const Careers = ({ openingsData, applicationsData }) => {
   );
 };
 
-export async function getServerSideProps(ctx) {
-  // Fetch data from API
-  const token = getToken(ctx);
-
-  const jobres = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/job-openings`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  const openingsData = await jobres.json();
-
-  const appres = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/job-applications`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  const applicationsData = await appres.json();
-
-  // Pass data to the page via props
-
-  return { props: { openingsData, applicationsData } };
-}
 export default Careers;
