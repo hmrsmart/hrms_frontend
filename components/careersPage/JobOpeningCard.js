@@ -1,75 +1,95 @@
 import React from "react";
 import moment from "moment";
-import {
-  Container,
-  Form,
-  Button,
-  Input,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Card,
-  CardHeader,
-  CardBody,
-  Badge,
-} from "reactstrap";
+import DataTable from "react-data-table-component";
+import { Container } from "reactstrap";
+
+const columns = [
+  {
+    name: "Position",
+    selector: "Title",
+    sortable: true,
+  },
+  {
+    name: "Date",
+    selector: "Date",
+    sortable: true,
+    format: (row) => moment(row.Date).format("MMMM DD YYYY"),
+  },
+  {
+    name: "Status",
+    selector: "Status",
+    sortable: true,
+  },
+  {
+    name: "Experience",
+    selector: "Experience",
+    sortable: true,
+  },
+  {
+    name: "Location",
+    selector: "Location",
+    sortable: true,
+  },
+];
+
+const ExpandableComponent = ({ data }) => {
+  return (
+    <Container>
+      <div className="py-2">
+        <p className="text-muted">
+          <small>Requirements</small>
+        </p>
+        <ul>
+          {data &&
+            data.Requirements.split("\n").map((res) => {
+              return (
+                res !== "" && (
+                  <li className="py-1">
+                    <small>{res}</small>
+                  </li>
+                )
+              );
+            })}
+        </ul>
+
+        <p className="text-muted">
+          <small>Responsibilities</small>
+        </p>
+        <ul>
+          {data &&
+            data.Responsibilities.split("\n").map((res) => {
+              return (
+                res !== "" && (
+                  <li className="py-1">
+                    <small>{res}</small>
+                  </li>
+                )
+              );
+            })}
+        </ul>
+      </div>
+    </Container>
+  );
+};
 
 const JobApplicantCard = ({ data }) => {
-  console.log(data);
   return (
-    <Card className="my-3">
-      <CardHeader className="d-flex justify-content-between">
-        <p className="mb-0">
-          <span className="text-muted mr-3">Title</span>
-          {data.Title}
-        </p>
-        <p className="mb-0">
-          <span className="text-muted mr-3">Post Date</span>
-          {moment(data.createdAt).format("MMMM Do YYYY")}
-        </p>
-
-        <Badge color={data.Status === "open" ? "success" : "warning"}>
-          {data.Status === "open" ? "Open" : "Closed"}
-        </Badge>
-      </CardHeader>
-      <CardBody>
-        <div>
-          <Row>
-            <Col lg={6}>
-              <p className="d-flex">
-                <span className="text-muted mr-2">Location</span>
-                <span>{data.Location}</span>
-              </p>
-            </Col>
-            <Col lg={6}>
-              <p className="d-flex">
-                <span className="text-muted mr-2">Experience</span>
-                <span>{data.Experience}</span>
-              </p>
-            </Col>
-          </Row>
-          <p className="d-flex flex-column">
-            <span className="text-muted py-2">Requirements</span>
-            <ul>
-              {data &&
-                data.Requirements.split("\n").map((res) => {
-                  return res !== "" && <li className="py-2">{res}</li>;
-                })}
-            </ul>
-          </p>
-          <p className="d-flex flex-column">
-            <span className="text-muted py-2">Responsibilities</span>
-            <ul>
-              {data &&
-                data.Responsibilities.split("\n").map((res) => {
-                  return res !== "" && <li className="py-2">{res}</li>;
-                })}
-            </ul>
-          </p>
-        </div>
-      </CardBody>
-    </Card>
+    <Container className="py-3">
+      {data && (
+        <DataTable
+          title="Open Positions"
+          striped
+          highlightOnHover
+          pointerOnHover
+          pagination
+          columns={columns}
+          data={data}
+          expandableRows
+          expandOnRowClicked
+          expandableRowsComponent={<ExpandableComponent />}
+        />
+      )}
+    </Container>
   );
 };
 

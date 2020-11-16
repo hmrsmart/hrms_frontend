@@ -6,22 +6,7 @@ import {
   NavItem,
   NavLink,
   Container,
-  Form,
-  Button,
-  Input,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Card,
-  CardHeader,
-  CardBody,
-  Badge,
 } from "reactstrap";
-import { getToken } from "../lib/getToken";
-import { useForm } from "react-hook-form";
-// import Datetime from "react-datetime";
-import moment from "moment";
 
 import JobOpeningCard from "../components/careersPage/JobOpeningCard";
 import JobApplicantCard from "../components/careersPage/JobApplicantCard";
@@ -116,18 +101,14 @@ const Careers = () => {
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
           <Container>
-            {jobOpeningsData &&
-              jobOpeningsData.map((data) => {
-                return <JobOpeningCard data={data} />;
-              })}
+            {jobOpeningsData && <JobOpeningCard data={jobOpeningsData} />}
           </Container>
         </TabPane>
         <TabPane tabId="2">
           <Container>
-            {jobApplicationsData &&
-              jobApplicationsData.map((data) => {
-                return <JobApplicantCard data={data} />;
-              })}
+            {jobApplicationsData && (
+              <JobApplicantCard data={jobApplicationsData} />
+            )}
           </Container>
         </TabPane>
         <TabPane tabId="3">

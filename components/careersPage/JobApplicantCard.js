@@ -1,110 +1,110 @@
 import React from "react";
 import moment from "moment";
-import {
-  Container,
-  Form,
-  Button,
-  Input,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Card,
-  CardHeader,
-  CardBody,
-  Badge,
-} from "reactstrap";
+import DataTable from "react-data-table-component";
+import { Container } from "reactstrap";
 import FileSaver from "file-saver";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const JobApplicantCard = ({ data }) => {
-  console.log(data);
-  const downoladFile = (event) => {
-    event.preventDefault();
-    FileSaver.saveAs(event.target.href, event.target.name);
-  };
+const downoladFile = (url, name) => {
+  FileSaver.saveAs(url, name);
+};
+
+const columns = [
+  {
+    name: "Name",
+    selector: "Firstname",
+    sortable: true,
+    format: (row) => `${row.Firstname} ${row.Lastname}`,
+  },
+  {
+    name: "Date",
+    selector: "Date",
+    sortable: true,
+    format: (row) => moment(row.Date).format("MMMM DD YYYY"),
+  },
+  {
+    name: "Email",
+    selector: "Email",
+    sortable: true,
+  },
+  {
+    name: "Phone",
+    selector: "Phone",
+    sortable: true,
+  },
+  {
+    name: "Resume",
+    sortable: true,
+    button: true,
+    cell: (row) => {
+      return row.Resume[0] ? (
+        <button
+          type="button"
+          onClick={() =>
+            downoladFile(
+              row.Resume[0].url,
+              `Resume_${row.Firstname}_${row.Lastname}${row.Resume[0].ext}`
+            )
+          }
+          className="btn btn-link text-success"
+          download
+        >
+          <FontAwesomeIcon
+            icon={["fas", "download"]}
+            className="mr-2 text-dark"
+          />
+        </button>
+      ) : (
+        <p>N/A</p>
+      );
+    },
+  },
+];
+
+const ExpandableComponent = ({ data }) => {
   return (
-    <Card className="my-3">
-      <CardHeader>
-        <Row>
-          <Col lg={4}>
-            <p className="mb-0">
-              <span className="text-muted mr-3">Applicant Name</span>
-              <span className="text-capitalize">
-                {data.Firstname} {data.Lastname}
-              </span>
-            </p>
-          </Col>
-          <Col lg={4} className="text-center">
-            <p className="mb-0">
-              <span className="text-muted mr-3">Date</span>
-              {moment(data.Date).format("MMMM Do YYYY")}
-            </p>
-          </Col>
-          <Col lg={4} className="text-right">
-            {data.Resume[0] ? (
-              <a
-                name={`Resume_${data.Firstname}_${data.Lastname}.${data.Resume[0].ext}`}
-                href={data.Resume[0].url}
-                onClick={downoladFile}
-                className="pay_link btn btn-success"
-                download
-              >
-                <FontAwesomeIcon
-                  icon={["fas", "download"]}
-                  className="mr-2 text-dark"
-                />
-                Resume
-              </a>
-            ) : (
-              <p>
-                <span className="text-muted mr-2">Resume</span>
-                <span>N/A</span>
-              </p>
-            )}
-          </Col>
-        </Row>
-      </CardHeader>
-      <CardBody>
-        <div>
-          <Row>
-            <Col lg={6}>
-              <p className="d-flex">
-                <span className="text-muted mr-2">Applied for</span>
-                <span>{data.Position}</span>
-              </p>
-            </Col>
-            <Col lg={6}>
-              <p className="d-flex">
-                <span className="text-muted mr-2">From</span>
-                <span className="text-uppercase">{data.Website}</span>
-                <span className="text-muted ml-2">Website</span>
-              </p>
-            </Col>
-            <Col lg={6}>
-              <p className="d-flex">
-                <span className="text-muted mr-2">Email</span>
-                <span>{data.Email}</span>
-              </p>
-            </Col>
-            <Col lg={6}>
-              <p className="d-flex">
-                <span className="text-muted mr-2">Phone</span>
-                <span>{data.Phone}</span>
-              </p>
-            </Col>
-            <Col>
-              <p className="d-flex flex-column">
-                <span className="text-muted">Message</span>
-                <span className="py-2">
-                  {data.Message ? data.Message : "N/A"}
-                </span>
-              </p>
-            </Col>
-          </Row>
-        </div>
-      </CardBody>
-    </Card>
+    <Container>
+      <div className="py-2">
+        <p>
+          <small className="text-muted">
+            Applied for <span className="mr-3 text-dark">{data.Position}</span>
+          </small>
+        </p>
+
+        <p className="text-muted">
+          <small>Message</small>
+        </p>
+        <p>
+          <small>{data.Message}</small>
+        </p>
+      </div>
+      <p>
+        <small className="text-muted">
+          From <span className="text-dark">{data.Website}</span> Website
+        </small>
+      </p>
+    </Container>
+  );
+};
+
+const JobApplicantCard = ({ data }) => {
+  return (
+    <Container className="py-3">
+      {data && (
+        <DataTable
+          title="Job Applications"
+          striped
+          highlightOnHover
+          pointerOnHover
+          pagination
+          columns={columns}
+          data={data}
+          expandableRows
+          expandOnRowClicked
+          expandableRowsComponent={<ExpandableComponent />}
+        />
+      )}
+    </Container>
   );
 };
 
