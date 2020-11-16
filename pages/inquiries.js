@@ -78,7 +78,7 @@ export async function getServerSideProps(ctx) {
     ? ctx.req.headers.cookie.split(" ")[1].replace("token=", "")
     : undefined;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/business-enquiries`,
+    "https://admin-zyclyx.herokuapp.com/business-enquiries",
     {
       headers: {
         Authorization: `Bearer ${token}`,
