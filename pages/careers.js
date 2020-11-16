@@ -40,7 +40,6 @@ const Careers = () => {
         return res.json();
       })
       .then((resJSON) => {
-        console.log(resJSON);
         setJobOpeningsData(resJSON);
       })
       .catch((error) => {
@@ -60,7 +59,6 @@ const Careers = () => {
         return res.json();
       })
       .then((resJSON) => {
-        console.log(resJSON);
         setJobApplicationsData(resJSON);
       })
       .catch((error) => {

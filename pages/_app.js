@@ -59,7 +59,6 @@ class MyApp extends App {
         },
       })
         .then(async (res) => {
-          // this.setState({ isPageLoading: false });
           if (!res.ok) {
             Cookie.remove("token");
             this.setState({ user: null });
@@ -86,6 +85,7 @@ class MyApp extends App {
         value={{
           user: this.state.user,
           isAuthenticated: !!this.state.user,
+          isManager: this.state.user && this.state.user.role.type === "manager",
           setUser: this.setUser,
         }}
       >
@@ -101,10 +101,6 @@ class MyApp extends App {
             src="https://kit.fontawesome.com/f3f3fd1f55.js"
             crossorigin="anonymous"
           ></script>
-          {/* <link
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-            rel="stylesheet"
-          /> */}
           <link
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
             rel="stylesheet"

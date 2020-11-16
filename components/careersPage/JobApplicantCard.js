@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import DataTable from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
 import { Container } from "reactstrap";
 import FileSaver from "file-saver";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -102,6 +102,7 @@ const JobApplicantCard = ({ data }) => {
           expandableRows
           expandOnRowClicked
           expandableRowsComponent={<ExpandableComponent />}
+          theme="solarized"
         />
       )}
     </Container>

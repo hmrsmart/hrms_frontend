@@ -1,10 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
   Container,
   Form,
   Button,
@@ -13,162 +8,171 @@ import {
   Col,
   FormGroup,
   Label,
-  Card,
-  CardHeader,
-  CardBody,
-  Badge,
 } from "reactstrap";
-
+import Cookie from "js-cookie";
 import { useForm } from "react-hook-form";
-// import Datetime from "react-datetime";
-import moment from "moment";
-
-const submitGrievance = (data) => {
-  if (user && token) {
-    const payload = {
-      Employee_Name: user.username,
-      Complaint_Date: new Date(),
-      Email: user.email,
-      Event_Time_Date: grievanceDate,
-      Place_Of_Event: data.Place_Of_Event,
-      Witness: data.Witness,
-      Account_Of_Event: data.Account_of_Event,
-      Violations: data.Violations,
-      user: user,
-    };
-
-    setFormSubmitLoading(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/grievances`, {
-      method: "post",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then((resJSON) => {
-        console.log(resJSON);
-        handleGrievanceFormResponse(resJSON);
-        setFormSubmitLoading(false);
-        setGrievanceDate({ _d: "" });
-        reset({});
-      })
-      .catch((error) => {
-        setFormSubmitLoading(false);
-        console.log(error);
-      });
-  }
-};
+import AppContext from "../../context/AppContext";
 
 const JobPostingForm = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
+  const token = Cookie.get("token");
+  const { user } = useContext(AppContext);
+  const appContext = useContext(AppContext);
+
+  const submitFormData = (data) => {
+    if (user && token) {
+      const payload = {
+        Title: data.Title,
+        Description: data.Description,
+        Location: data.Location,
+        Status: data.Status,
+        Requirements: data.Requirements,
+        Responsibilities: data.Responsibilities,
+        Experience: data.Experience,
+      };
+
+      setFormSubmitLoading(true);
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-openings`, {
+        method: "post",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then((resJSON) => {
+          console.log(resJSON);
+          setFormSubmitLoading(false);
+          reset({});
+        })
+        .catch((error) => {
+          setFormSubmitLoading(false);
+          console.log(error);
+        });
+    }
+  };
+
   return (
     <Container fluid>
-      {/* Grievance Form */}
+      {/* Job Positing Form Form */}
       <Container className="shadow shadow-sm rounded rounded-lg py-2 my-4">
         <h2 className="title-text-2 text-center py-5">
           Post a new job opening
         </h2>
-        <Form onSubmit={handleSubmit(submitGrievance)}>
+        <Form onSubmit={handleSubmit(submitFormData)}>
           <Row
             form
             className="d-flex align-items-center justify-content-center"
           >
             <Col lg={5} md={8}>
               <FormGroup className="py-3 mx-2">
-                <Label for="placeOfEvent" className="text-muted">
-                  <span className="text-danger mr-1">*</span>Title
+                <Label for="title" className="text-muted">
+                  <span className="text-danger mr-1">*</span>Position Title
                 </Label>
                 <Input
                   type="text"
-                  name="Place_Of_Event"
-                  id="placeOfEvent"
+                  name="Title"
+                  id="title"
                   innerRef={register({ required: true })}
                 />
-                {errors.Place_Of_Event && (
-                  <span className="err-msg">* Place of event is required</span>
+                {errors.Title && (
+                  <span className="err-msg">* Title is required</span>
                 )}
               </FormGroup>
             </Col>
 
             <Col lg={5} md={8}>
               <FormGroup className="py-3 mx-2">
-                <Label for="date" className="text-muted">
+                <Label for="experience" className="text-muted">
                   <span className="text-danger mr-1">*</span> Experience
                 </Label>
                 <Input
                   type="text"
-                  name="date"
-                  id="date"
-                  autoComplete="off"
+                  name="Experience"
+                  id="experience"
                   innerRef={register({ required: true })}
                 />
-                {errors.date && (
-                  <span className="err-msg">* Place of event is required</span>
+                {errors.Experience && (
+                  <span className="err-msg">* Experience is required</span>
                 )}
               </FormGroup>
             </Col>
 
             <Col lg={5} md={8}>
               <FormGroup className="py-3 mx-2">
-                <Label for="witness" className="text-muted">
-                  Location
+                <Label for="location" className="text-muted">
+                  <span className="text-danger mr-1">*</span> Location
                 </Label>
                 <Input
                   type="text"
-                  name="Witness"
-                  id="witness"
-                  innerRef={register({ required: false })}
+                  name="Location"
+                  id="location"
+                  innerRef={register({ required: true })}
                 />
-                {errors.witness && (
-                  <span className="err-msg">* Place of event is required</span>
+                {errors.Location && (
+                  <span className="err-msg">* Location is required</span>
                 )}
               </FormGroup>
             </Col>
 
             <Col lg={5} md={8}>
               <FormGroup className="py-3 mx-2">
-                <Label for="witness" className="text-muted">
-                  Status
+                <Label for="status" className="text-muted">
+                  <span className="text-danger mr-1">*</span> Status
                 </Label>
-                <Input
-                  type="text"
-                  name="Witness"
-                  id="witness"
-                  innerRef={register({ required: false })}
-                />
-                {errors.witness && (
-                  <span className="err-msg">* Place of event is required</span>
+
+                <select
+                  className="form-control py-2"
+                  id="status"
+                  name="Status"
+                  ref={register({ required: true })}
+                >
+                  <option value="open">Open</option>
+                  <option value="closed">Closed</option>
+                </select>
+                {errors.Status && (
+                  <span className="err-msg">* Status is required</span>
                 )}
               </FormGroup>
             </Col>
-
             <Col lg={10} md={8}>
               <FormGroup className="py-3 mx-2">
-                <Label for="accountOfEvent" className="text-muted">
+                <Label for="description" className="text-muted">
+                  Description
+                </Label>
+                <Input
+                  type="textarea"
+                  name="Description"
+                  id="description"
+                  rows="3"
+                  innerRef={register({ required: false })}
+                />
+              </FormGroup>
+            </Col>
+            <Col lg={10} md={8}>
+              <FormGroup className="py-3 mx-2">
+                <Label for="requirements" className="text-muted">
                   <span className="text-danger mr-1">*</span>Requirements
                 </Label>
                 <Input
                   type="textarea"
-                  name="Account_of_Event"
-                  id="accountOfEvent"
-                  rows="4"
+                  name="Requirements"
+                  id="requirements"
+                  rows="6"
                   innerRef={register({ required: true })}
                 />
-                {errors.Account_of_Event && (
-                  <span className="err-msg">
-                    * Please provide grievance details
-                  </span>
+                {errors.Requirements && (
+                  <span className="err-msg">* Please provide requirements</span>
                 )}
                 <p>
                   <small className="text-muted">
-                    Please start adding each requirement in new line
+                    Please add each single requirement in a new line
                   </small>
                 </p>
               </FormGroup>
@@ -176,22 +180,22 @@ const JobPostingForm = () => {
 
             <Col lg={10} md={8}>
               <FormGroup className="py-3 mx-2">
-                <Label for="violations" className="text-muted">
-                  <span className="text-danger mr-1">*</span>Responsibilities
+                <Label for="responsibilities" className="text-muted">
+                  <span className="text-danger mr-1">*</span> Responsibilities
                 </Label>
                 <Input
                   type="textarea"
-                  name="Violations"
-                  id="violations"
-                  rows="4"
+                  name="Responsibilities"
+                  id="responsibilities"
+                  rows="6"
                   innerRef={register({ required: true })}
                 />
-                {errors.Violations && (
-                  <span className="err-msg">*violations details required</span>
+                {errors.Responsibilities && (
+                  <span className="err-msg">* Responsibilities required</span>
                 )}
                 <p>
                   <small className="text-muted">
-                    Please start adding each requirement in new line
+                    Please add each single Responsibility in a new line
                   </small>
                 </p>
               </FormGroup>
@@ -199,8 +203,12 @@ const JobPostingForm = () => {
 
             <Col lg={10} md={8} className="text-center">
               <FormGroup>
-                <Button type="submit" color="success">
-                  {!formSubmitLoading ? "Submit" : "Sending ..."}
+                <Button
+                  type="submit"
+                  color="success"
+                  disabled={formSubmitLoading}
+                >
+                  {!formSubmitLoading ? "Submit Position" : "Sending ..."}
                 </Button>
               </FormGroup>
             </Col>

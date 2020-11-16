@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 // import Datetime from "react-datetime";
+import DataTable from "react-data-table-component";
 import moment from "moment";
 import {
   Container,
@@ -11,71 +12,136 @@ import {
   Col,
   FormGroup,
   Label,
-  Card,
-  CardHeader,
-  CardBody,
-  Badge,
 } from "reactstrap";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 // TODO : Refactor code
 
+const columns = [
+  {
+    name: "Complaint Date",
+    selector: "Complaint_Date",
+    sortable: true,
+    format: (row) => moment(row.Complaint_Date).format("MMMM DD YYYY"),
+  },
+  {
+    name: "Event Time & Date",
+    selector: "Event_Time_Date",
+    sortable: true,
+    format: (row) => moment(row.Event_Time_Date).format("MMMM DD YYYY"),
+  },
+  {
+    name: "Status",
+    selector: "Status",
+    sortable: true,
+  },
+  {
+    name: "Place of Event",
+    selector: "Place_Of_Event",
+    sortable: true,
+  },
+  {
+    name: "Witness",
+    selector: "Witness",
+    sortable: true,
+  },
+];
+
+const ExpandableComponent = ({ data }) => {
+  return (
+    <Container>
+      <div className="py-2">
+        <p className="text-muted">
+          <small>Account of Event</small>
+        </p>
+        <p>{data.Account_Of_Event}</p>
+
+        <p className="text-muted">
+          <small>Violations</small>
+        </p>
+        <p>{data.Violations}</p>
+
+        <p className="text-muted">
+          <small>Proposed_Solution</small>
+        </p>
+        <p>{data.Proposed_Solution ? data.Proposed_Solution : "N/A"}</p>
+      </div>
+    </Container>
+  );
+};
+
 const GrievanceRecordCard = ({ data }) => {
   return (
-    <Card className="my-3">
-      <CardHeader className="d-flex justify-content-between">
-        <p className="mb-0">
-          <span className="text-muted mr-3">Complaint Date</span>
-          {moment(data.Complaint_Date).format("MMMM Do YYYY")}
-        </p>
-        <p className="mb-0">
-          <span className="text-muted mr-3">Date and Time of Event </span>
-          <span>
-            {moment(data.Event_Time_Date).format("MMMM Do YYYY, h:mm:ss a")}
-          </span>
-        </p>
+    <Container className="py-3">
+      {data && (
+        <DataTable
+          title="Grievances"
+          striped
+          highlightOnHover
+          pointerOnHover
+          pagination
+          columns={columns}
+          data={data}
+          expandableRows
+          expandOnRowClicked
+          expandableRowsComponent={<ExpandableComponent />}
+        />
+      )}
+    </Container>
+    // <Card className="my-3">
+    //   <CardHeader className="d-flex justify-content-between">
+    //     <p className="mb-0">
+    //       <span className="text-muted mr-3">Complaint Date</span>
+    //       {moment(data.Complaint_Date).format("MMMM Do YYYY")}
+    //     </p>
+    //     <p className="mb-0">
+    //       <span className="text-muted mr-3">Date and Time of Event </span>
+    //       <span>
+    //         {moment(data.Event_Time_Date).format("MMMM Do YYYY, h:mm:ss a")}
+    //       </span>
+    //     </p>
 
-        <Badge color={data.Status === "Active" ? "warning" : "success"}>
-          {data.Status === "Active" ? "Active" : "Resolved"}
-        </Badge>
-      </CardHeader>
-      <CardBody>
-        <div>
-          <Row>
-            <Col lg={6}>
-              <p className="d-flex flex-column">
-                <span className="text-muted py-2">Place of Event</span>
-                <span>{data.Place_Of_Event}</span>
-              </p>
-            </Col>
-            <Col lg={6}>
-              <p className="d-flex flex-column">
-                <span className="text-muted py-2">Witness</span>
-                <span>{data.Witness}</span>
-              </p>
-            </Col>
-          </Row>
-          <p className="d-flex flex-column">
-            <span className="text-muted py-2">Account of Event</span>
-            {data.Account_Of_Event}
-          </p>
-          <p className="d-flex flex-column">
-            <span className="text-muted py-2">Violations</span>
-            {data.Violations}
-          </p>
-          {data.Proposed_Solution && (
-            <p className="d-flex flex-column">
-              <span className="text-muted py-2">Proposed Solution</span>
-              {data.Proposed_Solution}
-            </p>
-          )}
-          {/* <p>
-            <small className="text-muted">Reported To</small>
-          </p> */}
-        </div>
-      </CardBody>
-    </Card>
+    //     <Badge color={data.Status === "Active" ? "warning" : "success"}>
+    //       {data.Status === "Active" ? "Active" : "Resolved"}
+    //     </Badge>
+    //   </CardHeader>
+    //   <CardBody>
+    //     <div>
+    //       <Row>
+    //         <Col lg={6}>
+    //           <p className="d-flex flex-column">
+    //             <span className="text-muted py-2">Place of Event</span>
+    //             <span>{data.Place_Of_Event}</span>
+    //           </p>
+    //         </Col>
+    //         <Col lg={6}>
+    //           <p className="d-flex flex-column">
+    //             <span className="text-muted py-2">Witness</span>
+    //             <span>{data.Witness}</span>
+    //           </p>
+    //         </Col>
+    //       </Row>
+    //       <p className="d-flex flex-column">
+    //         <span className="text-muted py-2">Account of Event</span>
+    //         {data.Account_Of_Event}
+    //       </p>
+    //       <p className="d-flex flex-column">
+    //         <span className="text-muted py-2">Violations</span>
+    //         {data.Violations}
+    //       </p>
+    //       {data.Proposed_Solution && (
+    //         <p className="d-flex flex-column">
+    //           <span className="text-muted py-2">Proposed Solution</span>
+    //           {data.Proposed_Solution}
+    //         </p>
+    //       )}
+    //       {/* <p>
+    //         <small className="text-muted">Reported To</small>
+    //       </p> */}
+    //     </div>
+    //   </CardBody>
+    // </Card>
   );
 };
 
@@ -315,10 +381,9 @@ const Grievances = () => {
       {/* Grievance History */}
       <Container className="py-5">
         <h2 className="title-text-2 text-center py-3">Grievance History</h2>
-        {grievanceHistoryData &&
-          grievanceHistoryData.map((data) => {
-            return <GrievanceRecordCard data={data} key={data.id} />;
-          })}
+        {grievanceHistoryData && (
+          <GrievanceRecordCard data={grievanceHistoryData} />
+        )}
       </Container>
     </Container>
   );
