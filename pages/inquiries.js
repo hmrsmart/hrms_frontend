@@ -2,7 +2,6 @@ import React from "react";
 import { Container } from "reactstrap";
 import DataTable from "react-data-table-component";
 import moment from "moment";
-import { getToken } from "../lib/getToken";
 // import Cookie from "js-cookie";
 // import AppContext from "../context/AppContext";
 
@@ -75,7 +74,9 @@ const Inquiries = ({ data }) => {
 
 export async function getServerSideProps(ctx) {
   // Fetch data from API
-  const token = getToken(ctx);
+  const token = ctx.req.headers.cookie
+    ? ctx.req.headers.cookie.split(" ")[1].replace("token=", "")
+    : undefined;
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/business-enquiries`,
     {
