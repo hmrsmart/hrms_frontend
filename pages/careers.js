@@ -6,7 +6,23 @@ import {
   NavItem,
   NavLink,
   Container,
+  Form,
+  Button,
+  Input,
+  Row,
+  Col,
+  FormGroup,
+  Label,
+  Card,
+  CardHeader,
+  CardBody,
+  Badge,
 } from "reactstrap";
+import { getToken } from "../lib/getToken";
+import { useForm } from "react-hook-form";
+// import Datetime from "react-datetime";
+import moment from "moment";
+
 import JobOpeningCard from "../components/careersPage/JobOpeningCard";
 import JobApplicantCard from "../components/careersPage/JobApplicantCard";
 import JobPostingForm from "../components/careersPage/JobPostingForm";
@@ -15,7 +31,9 @@ import { Spinner } from "reactstrap";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 
-const Careers = () => {
+const Careers = ({ openingsData, applicationsData }) => {
+  console.log(openingsData);
+  console.log(applicationsData);
   const token = Cookie.get("token");
   const [activeTab, setActiveTab] = useState("1");
   const toggle = (tab) => {
@@ -122,4 +140,32 @@ const Careers = () => {
   );
 };
 
+export async function getServerSideProps(ctx) {
+  // Fetch data from API
+  const token = getToken(ctx);
+
+  const jobres = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/job-openings`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const openingsData = await jobres.json();
+
+  const appres = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/job-applications`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const applicationsData = await appres.json();
+
+  // Pass data to the page via props
+
+  return { props: { openingsData, applicationsData } };
+}
 export default Careers;
