@@ -76,3 +76,9 @@ button:disabled {
 .table th {
   vertical-align: middle;
 }
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 80vw !important;
+  }
+}

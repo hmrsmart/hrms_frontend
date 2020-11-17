@@ -10,7 +10,7 @@ import {
   Label,
 } from "reactstrap";
 import Cookie from "js-cookie";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import AppContext from "../../context/AppContext";
 
 const JobPostingForm = () => {
@@ -65,6 +65,7 @@ const JobPostingForm = () => {
         <h2 className="title-text-2 text-center py-5">
           Post a new job opening
         </h2>
+
         <Form onSubmit={handleSubmit(submitFormData)}>
           <Row
             form
@@ -75,6 +76,7 @@ const JobPostingForm = () => {
                 <Label for="title" className="text-muted">
                   <span className="text-danger mr-1">*</span>Position Title
                 </Label>
+
                 <Input
                   type="text"
                   name="Title"
@@ -98,6 +100,7 @@ const JobPostingForm = () => {
                   id="experience"
                   innerRef={register({ required: true })}
                 />
+
                 {errors.Experience && (
                   <span className="err-msg">* Experience is required</span>
                 )}
@@ -109,6 +112,7 @@ const JobPostingForm = () => {
                 <Label for="location" className="text-muted">
                   <span className="text-danger mr-1">*</span> Location
                 </Label>
+
                 <Input
                   type="text"
                   name="Location"
@@ -136,6 +140,7 @@ const JobPostingForm = () => {
                   <option value="open">Open</option>
                   <option value="closed">Closed</option>
                 </select>
+
                 {errors.Status && (
                   <span className="err-msg">* Status is required</span>
                 )}
@@ -167,6 +172,7 @@ const JobPostingForm = () => {
                   rows="6"
                   innerRef={register({ required: true })}
                 />
+
                 {errors.Requirements && (
                   <span className="err-msg">* Please provide requirements</span>
                 )}
@@ -190,6 +196,7 @@ const JobPostingForm = () => {
                   rows="6"
                   innerRef={register({ required: true })}
                 />
+
                 {errors.Responsibilities && (
                   <span className="err-msg">* Responsibilities required</span>
                 )}

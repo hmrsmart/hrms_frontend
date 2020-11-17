@@ -89,59 +89,6 @@ const GrievanceRecordCard = ({ data }) => {
         />
       )}
     </Container>
-    // <Card className="my-3">
-    //   <CardHeader className="d-flex justify-content-between">
-    //     <p className="mb-0">
-    //       <span className="text-muted mr-3">Complaint Date</span>
-    //       {moment(data.Complaint_Date).format("MMMM Do YYYY")}
-    //     </p>
-    //     <p className="mb-0">
-    //       <span className="text-muted mr-3">Date and Time of Event </span>
-    //       <span>
-    //         {moment(data.Event_Time_Date).format("MMMM Do YYYY, h:mm:ss a")}
-    //       </span>
-    //     </p>
-
-    //     <Badge color={data.Status === "Active" ? "warning" : "success"}>
-    //       {data.Status === "Active" ? "Active" : "Resolved"}
-    //     </Badge>
-    //   </CardHeader>
-    //   <CardBody>
-    //     <div>
-    //       <Row>
-    //         <Col lg={6}>
-    //           <p className="d-flex flex-column">
-    //             <span className="text-muted py-2">Place of Event</span>
-    //             <span>{data.Place_Of_Event}</span>
-    //           </p>
-    //         </Col>
-    //         <Col lg={6}>
-    //           <p className="d-flex flex-column">
-    //             <span className="text-muted py-2">Witness</span>
-    //             <span>{data.Witness}</span>
-    //           </p>
-    //         </Col>
-    //       </Row>
-    //       <p className="d-flex flex-column">
-    //         <span className="text-muted py-2">Account of Event</span>
-    //         {data.Account_Of_Event}
-    //       </p>
-    //       <p className="d-flex flex-column">
-    //         <span className="text-muted py-2">Violations</span>
-    //         {data.Violations}
-    //       </p>
-    //       {data.Proposed_Solution && (
-    //         <p className="d-flex flex-column">
-    //           <span className="text-muted py-2">Proposed Solution</span>
-    //           {data.Proposed_Solution}
-    //         </p>
-    //       )}
-    //       {/* <p>
-    //         <small className="text-muted">Reported To</small>
-    //       </p> */}
-    //     </div>
-    //   </CardBody>
-    // </Card>
   );
 };
 
@@ -189,6 +136,7 @@ const Grievances = () => {
   };
 
   const submitGrievance = (data) => {
+    console.log(data);
     if (user && token) {
       const payload = {
         Employee_Name: user.username,
@@ -199,6 +147,7 @@ const Grievances = () => {
         Witness: data.Witness,
         Account_Of_Event: data.Account_of_Event,
         Violations: data.Violations,
+        Reported_To: data.Reported_To,
         user: user,
       };
 
@@ -367,7 +316,38 @@ const Grievances = () => {
                 </p>
               </FormGroup>
             </Col>
-
+            <Col lg={10} md="8">
+              <FormGroup tag="fieldset" className="d-flex py-2">
+                <legend className="text-muted">
+                  <small>Report To</small>
+                </legend>
+                <FormGroup check className="mx-2">
+                  <Label check>
+                    <Input
+                      type="radio"
+                      name="Reported_To"
+                      value="HR Manager"
+                      innerRef={register({ required: true })}
+                    />
+                    HR Manager
+                  </Label>
+                </FormGroup>
+                <FormGroup check className="mx-2">
+                  <Label check>
+                    <Input
+                      type="radio"
+                      name="Reported_To"
+                      value="Line Manager"
+                      innerRef={register({ required: true })}
+                    />
+                    Line Manager
+                  </Label>
+                </FormGroup>
+              </FormGroup>
+              {errors.reportto && (
+                <span className="err-msg">*select reporting manager</span>
+              )}
+            </Col>
             <Col lg={10} md={8} className="text-center">
               <FormGroup>
                 <Button type="submit" color="success">

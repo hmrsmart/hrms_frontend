@@ -17,7 +17,7 @@ const columns = [
     format: (row) => `${row.Firstname} ${row.Lastname}`,
   },
   {
-    name: "Date",
+    name: "Applied Date",
     selector: "Date",
     sortable: true,
     format: (row) => moment(row.Date).format("MMMM DD YYYY"),

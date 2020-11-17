@@ -66,6 +66,7 @@ class MyApp extends App {
           }
           const user = await res.json();
           this.setUser(user);
+          console.log(user);
         })
         .catch((error) => {
           console.log(error);

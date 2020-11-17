@@ -92,7 +92,7 @@ const Careers = () => {
               toggle("3");
             }}
           >
-            Post a new jOb
+            Post a new job
           </NavLink>
         </NavItem>
       </Nav>
