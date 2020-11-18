@@ -131,6 +131,38 @@ const Grievances = () => {
         .catch((error) => {
           console.log(error);
         });
+
+      //   if (
+      //     user.Email === user.hr_manager.Manager_Email ||
+      //     user.Email === user.line_manager.Manager_Email
+      //   ) {
+      //     let URL;
+
+      //     if (user.Email === user.hr_manager.Manager_Email) {
+      //       URL = `${process.env.NEXT_PUBLIC_API_URL}/grievances?hr_manager.id=${user.hr_manager}`;
+      //     }
+      //     if (user.Email === user.line_manager.Manager_Email) {
+      //       URL = `${process.env.NEXT_PUBLIC_API_URL}/grievances?line_manager.id=${user.line_manager}`;
+      //     }
+
+      //     fetch(URL, {
+      //       headers: {
+      //         Authorization: `Bearer ${token}`,
+      //       },
+      //     })
+      //       .then((res) => {
+      //         if (!res.ok) {
+      //           throw Error(res.statusText);
+      //         }
+      //         return res.json();
+      //       })
+      //       .then((resJSON) => {
+      //         console.log(resJSON);
+      //       })
+      //       .catch((error) => {
+      //         console.log(error);
+      //       });
+      //   }
     }
   }, []);
 
