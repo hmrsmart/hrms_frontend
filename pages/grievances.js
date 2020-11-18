@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 // import Datetime from "react-datetime";
 import DataTable from "react-data-table-component";
 import moment from "moment";
+import { DateTimePicker } from "@material-ui/pickers";
 import {
   Container,
   Form,
@@ -98,6 +99,11 @@ const Grievances = () => {
   const router = useRouter();
   const { user } = useContext(AppContext);
   const [grievanceHistoryData, setgrievanceHistoryData] = useState(null);
+  const [selectedDate, handleDateChange] = useState(new Date());
+  const { register, handleSubmit, errors, reset } = useForm();
+  const [formSubmitLoading, setFormSubmitLoading] = useState(false);
+
+  console.log(user);
 
   useEffect(() => {
     if (!appContext.isAuthenticated) {
@@ -128,13 +134,6 @@ const Grievances = () => {
     }
   }, []);
 
-  const { register, handleSubmit, errors, reset } = useForm();
-  const [grievanceDate, setGrievanceDate] = useState(null);
-  const [formSubmitLoading, setFormSubmitLoading] = useState(false);
-  const handleGrievanceDateChange = (date) => {
-    setGrievanceDate(date._d);
-  };
-
   const submitGrievance = (data) => {
     console.log(data);
     if (user && token) {
@@ -142,7 +141,7 @@ const Grievances = () => {
         Employee_Name: user.username,
         Complaint_Date: new Date(),
         Email: user.email,
-        Event_Time_Date: grievanceDate,
+        Event_Time_Date: selectedDate,
         Place_Of_Event: data.Place_Of_Event,
         Witness: data.Witness,
         Account_Of_Event: data.Account_of_Event,
@@ -150,7 +149,6 @@ const Grievances = () => {
         Reported_To: data.Reported_To,
         user: user,
       };
-
       setFormSubmitLoading(true);
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/grievances`, {
         method: "post",
@@ -166,10 +164,8 @@ const Grievances = () => {
           return res.json();
         })
         .then((resJSON) => {
-          console.log(resJSON);
           handleGrievanceFormResponse(resJSON);
           setFormSubmitLoading(false);
-          setGrievanceDate({ _d: "" });
           reset({});
         })
         .catch((error) => {
@@ -237,12 +233,17 @@ const Grievances = () => {
                 <Label for="date" className="text-muted">
                   <span className="text-danger mr-1">*</span> Date and Time
                 </Label>
-                <Input
+                {/* <Input
                   type="text"
                   name="date"
                   id="date"
                   autoComplete="off"
                   innerRef={register({ required: true })}
+                /> */}
+                <DateTimePicker
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  className="form-control px-3"
                 />
                 {errors.date && (
                   <span className="err-msg">* Place of event is required</span>
@@ -326,7 +327,7 @@ const Grievances = () => {
                     <Input
                       type="radio"
                       name="Reported_To"
-                      value="HR Manager"
+                      value="HR_Manager"
                       innerRef={register({ required: true })}
                     />
                     HR Manager
@@ -337,10 +338,21 @@ const Grievances = () => {
                     <Input
                       type="radio"
                       name="Reported_To"
-                      value="Line Manager"
+                      value="Line_Manager"
                       innerRef={register({ required: true })}
                     />
                     Line Manager
+                  </Label>
+                </FormGroup>
+                <FormGroup check className="mx-2">
+                  <Label check>
+                    <Input
+                      type="radio"
+                      name="Reported_To"
+                      value="All"
+                      innerRef={register({ required: true })}
+                    />
+                    HR & Line Manager
                   </Label>
                 </FormGroup>
               </FormGroup>

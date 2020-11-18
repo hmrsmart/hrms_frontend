@@ -26,3 +26,12 @@
   border: 1px solid #abf5a3;
   min-height: 50px;
 }
+.MuiFormControl-root {
+  border: 1px solid #abf5a3 !important;
+  flex-direction: unset !important;
+}
+.MuiInput-underline:after,
+.MuiInput-underline:before {
+  border: none !important;
+  content: unset !important;
+}

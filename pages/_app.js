@@ -3,6 +3,8 @@ import App from "next/app";
 import Head from "next/head";
 import Cookie from "js-cookie";
 import fetch from "isomorphic-fetch";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHome,
@@ -82,35 +84,38 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <AppContext.Provider
-        value={{
-          user: this.state.user,
-          isAuthenticated: !!this.state.user,
-          isManager: this.state.user && this.state.user.role.type === "manager",
-          setUser: this.setUser,
-        }}
-      >
-        <Head>
-          <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-          <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-            integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-            crossOrigin="anonymous"
-          />
-          <script
-            src="https://kit.fontawesome.com/f3f3fd1f55.js"
-            crossorigin="anonymous"
-          ></script>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </AppContext.Provider>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <AppContext.Provider
+          value={{
+            user: this.state.user,
+            isAuthenticated: !!this.state.user,
+            isManager:
+              this.state.user && this.state.user.role.type === "manager",
+            setUser: this.setUser,
+          }}
+        >
+          <Head>
+            <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+            <link
+              rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+              integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+              crossOrigin="anonymous"
+            />
+            <script
+              src="https://kit.fontawesome.com/f3f3fd1f55.js"
+              crossorigin="anonymous"
+            ></script>
+            <link
+              href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+              rel="stylesheet"
+            />
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </AppContext.Provider>
+      </MuiPickersUtilsProvider>
     );
   }
 }

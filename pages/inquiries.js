@@ -1,59 +1,33 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Container } from "reactstrap";
+import { Container, UncontrolledAlert } from "reactstrap";
 import DataTable from "react-data-table-component";
-import moment from "moment";
 import Cookie from "js-cookie";
+import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
-
-const columns = [
-  {
-    name: "Name",
-    selector: "Full_Name",
-    sortable: true,
-  },
-  {
-    name: "Date",
-    selector: "Date",
-    sortable: true,
-    format: (row) => moment(row.Date).format("MMMM DD YYYY"),
-  },
-  {
-    name: "Email",
-    selector: "Email",
-    sortable: true,
-  },
-  {
-    name: "Phone",
-    selector: "Phone",
-    sortable: true,
-  },
-];
-
-const ExpandableComponent = ({ data }) => {
-  return (
-    <Container>
-      <div className="py-2">
-        <p className="text-muted">
-          <small>Message</small>
-        </p>
-        <p>
-          <small>{data.Message}</small>
-        </p>
-      </div>
-      <p>
-        <small className="text-muted">
-          From <span className="text-dark">{data.Website}</span> Website
-        </small>
-      </p>
-    </Container>
-  );
-};
+import InquiriesTableColumns from "../components/InquiriesPage/InquiriesTableColumns";
+import InquiriesTableExpandableComponent from "../components/InquiriesPage/InquiriesTableExpandableComponent";
 
 const Inquiries = () => {
   const token = Cookie.get("token");
-  const [inquiriesData, setInquiriesData] = useState(null);
+  const { user } = useContext(AppContext);
+  const appContext = useContext(AppContext);
+  const router = useRouter();
+
+  const [inquiriesData, setInquiriesData] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
-    // Get JOB Applications
+    if (!appContext.isAuthenticated && !appContext.isManager) {
+      router.push("/login");
+    }
+
+    if (appContext.isAuthenticated && !appContext.isManager) {
+      router.push("/");
+    }
+  }, [user]);
+
+  useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/business-enquiries`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,22 +35,29 @@ const Inquiries = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw Error(res.statusText);
+          throw new Error(res.statusText);
         }
         return res.json();
       })
       .then((resJSON) => {
-        console.log(resJSON);
         setInquiriesData(resJSON);
+        setIsError(false);
       })
       .catch((error) => {
-        console.log(error);
+        setIsError(true);
+        setErrorMessage(error ? error.toString() : "something went wrong");
       });
   }, []);
 
   return (
     <Container fluid>
-      {/* <h1 className="title-text py-3">Inquiries</h1> */}
+      {isError && (
+        <Container className="py-2">
+          <UncontrolledAlert color="danger">
+            {errorMessage},<span className="mx-2"> try again</span>
+          </UncontrolledAlert>
+        </Container>
+      )}
       <Container className="py-3">
         {inquiriesData && (
           <DataTable
@@ -85,11 +66,11 @@ const Inquiries = () => {
             highlightOnHover
             pointerOnHover
             pagination
-            columns={columns}
+            columns={InquiriesTableColumns}
             data={inquiriesData}
             expandableRows
             expandOnRowClicked
-            expandableRowsComponent={<ExpandableComponent />}
+            expandableRowsComponent={<InquiriesTableExpandableComponent />}
           />
         )}
       </Container>
