@@ -3,6 +3,17 @@ import Link from "next/link";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
+import {
+  Row,
+  Col,
+  Container,
+  Card,
+  CardText,
+  CardBody,
+  CardTitle,
+} from "reactstrap";
+// import DataTable from "react-data-table-component";
+// import moment from "moment";
 
 const LeaveRequest = (props) => {
   const [leaves, setLeaves] = useState([]);
@@ -64,53 +75,46 @@ const LeaveRequest = (props) => {
 
   return (
     <div className="container-fluid d-flex justify-conent-center flex-column">
-      <h2 className="py-3">Leave Balance</h2>
-
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">CL Utilized</th>
-            <th scope="col">SL Utilized</th>
-            <th scope="col">Total Utilized</th>
-            <th scope="col">Casual Leaves</th>
-            <th scope="col">Special Leaves</th>
-            <th scope="col">Sick Leaves</th>
-            <th scope="col">Bereavement Leaves</th>
-            <th scope="col">Leave Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading && (
-            <tr>
-              <td colSpan="8" className="text-center py-5">
-                Loading . . .
-              </td>
-            </tr>
-          )}
-          {balance.length !== 0
-            ? balance.map((task, index) => {
-                return (
-                  <tr>
-                    <td>{task.CL_Utilized}</td>
-                    <td>{task.SL_Utilized}</td>
-                    <td>{task.SL_Utilized}</td>
-                    <td>{task.Total_Leaves_Utilized}</td>
-                    <td>{task.Casual_Leaves}</td>
-                    <td>{task.Special_Leaves}</td>
-                    <td>{task.Bereavement_Leave}</td>
-                    <td>{task.Leave_Balance}</td>
-                  </tr>
-                );
-              })
-            : !isLoading && (
-                <tr>
-                  <td colSpan="8" className="text-center py-5">
-                    There is no Leave Balance Data
-                  </td>
-                </tr>
-              )}
-        </tbody>
-      </table>
+      <Container className="py-5">
+        <Row>
+          <Col lg={3}>
+            <Card className="l-card-1 border-0 p-3 bg-success">
+              <CardBody className="pb-0">
+                <CardTitle>Casual Leaves</CardTitle>
+                <p className="mb-0">Utilized - 0</p>
+                <p className="mb-0">Total - 0</p>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg={3}>
+            <Card className="l-card-2 border-0 p-3 bg-warning">
+              <CardBody className="pb-0">
+                <CardTitle>Sick Leaves</CardTitle>
+                <p className="mb-0">Utilized - 0</p>
+                <p className="mb-0">Total - 0</p>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg={3}>
+            <Card className="l-card-3 border-0 p-3 bg-primary">
+              <CardBody className="pb-0">
+                <CardTitle>Special Leaves</CardTitle>
+                <p className="mb-0">Utilized - 0</p>
+                <p className="mb-0">Total - 0</p>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg={3}>
+            <Card className="l-card-4 border-0 p-3 bg-danger">
+              <CardBody className="pb-0">
+                <CardTitle>Bereavement Leaves</CardTitle>
+                <p className="mb-0">Utilized - 0</p>
+                <p className="mb-0">Total - 0</p>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
 
       <h2 className="py-3">Leave Requests</h2>
       <div className="d-flex py-3">

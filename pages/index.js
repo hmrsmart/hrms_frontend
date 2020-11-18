@@ -7,9 +7,7 @@ import {
   Card,
   CardText,
   CardBody,
-  CardLink,
   CardTitle,
-  CardSubtitle,
 } from "reactstrap";
 
 import AppContext from "../context/AppContext";
