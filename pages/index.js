@@ -125,7 +125,7 @@ function Home() {
 
           <Col lg={4}>
             <div className="h-100 cal-box">
-              <Calendar />
+              <Calendar className="rounded rounded-lg border-0 shadow shadow-sm" />
             </div>
           </Col>
         </Row>
