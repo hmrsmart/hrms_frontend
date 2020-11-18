@@ -24,6 +24,8 @@ function Home() {
   const token = Cookie.get("token");
   const router = useRouter();
   const [announcements, setAnnouncements] = useState([]);
+  const [lineManager, setLineManager] = useState([]);
+  const [hrManager, setHrManager] = useState([]);
 
   console.log(user);
   useEffect(() => {
@@ -50,6 +52,51 @@ function Home() {
         .catch((error) => {
           console.log(error);
         });
+
+      // get HR Manager
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/hr-managers/${user.hr_manager}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then((resJSON) => {
+          console.log(resJSON);
+          setHrManager(resJSON);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/line-managers/${user.line_manager}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => {
+          if (!res.ok) {
+            throw Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then((resJSON) => {
+          console.log(resJSON);
+          setLineManager(resJSON);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, []);
 
@@ -61,13 +108,40 @@ function Home() {
             <Row>
               <Col lg={8}>
                 <Card className="card-1">
-                  <CardBody>
+                  <CardBody className="pb-0">
                     {user && (
                       <>
                         <CardTitle tag="h5" className="user-title">
                           {<strong> {user && user.username}</strong>}
                         </CardTitle>
                         <p>{user.email}</p>
+                        <hr />
+                        <div className="d-flex justify-content-around">
+                          <div>
+                            <h6>Line Manager</h6>
+                            {lineManager && (
+                              <>
+                                <p className="mb-0">
+                                  {lineManager.Manager_Name}
+                                </p>
+                                <p className="mb-0">
+                                  {lineManager.Manager_Email}
+                                </p>
+                              </>
+                            )}
+                          </div>
+                          <div>
+                            <h6>HR Manager</h6>
+                            {hrManager && (
+                              <>
+                                <p className="mb-0">{hrManager.Manager_Name}</p>
+                                <p className="mb-0">
+                                  {hrManager.Manager_Email}
+                                </p>
+                              </>
+                            )}
+                          </div>
+                        </div>
                       </>
                     )}
                   </CardBody>
