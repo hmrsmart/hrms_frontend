@@ -28,6 +28,7 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "../styles/style.css";
 import "../styles/layout.css";
 import "react-datetime/css/react-datetime.css";
+import "react-calendar/dist/Calendar.css";
 
 library.add(
   faHome,

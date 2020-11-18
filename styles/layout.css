@@ -35,3 +35,46 @@
   border: none !important;
   content: unset !important;
 }
+.u-floatLeft {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+.news-feed {
+  height: 400px;
+  overflow-y: scroll;
+  background-color: hsl(114, 80%, 95%);
+}
+.feed-card {
+  background-color: hsl(114, 80%, 90%);
+}
+.cal-box {
+  background-color: #fdf4e8;
+  padding: 1rem;
+}
+.news-feed h3,
+.news-feed h2,
+.news-feed h1 {
+  font-size: 1.2rem;
+}
+.news-feed h6,
+.news-feed h4,
+.news-feed h5 {
+  font-size: 1rem;
+  color: #555555;
+}
+.news-feed p {
+  font-size: 0.9rem;
+}
+.news-feed li {
+  padding: 0.2rem 0.5rem;
+}
+.profile-home .card {
+  border: none;
+}
+.card-1 {
+  background-color: orange;
+}
+.card-2 {
+  background-color: lightgreen;
+}
