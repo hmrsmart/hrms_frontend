@@ -45,8 +45,58 @@ function CodeOfConduct() {
         .catch((error) => {
           console.log(error);
         });
+
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/employee-acknowledgements?user.id=${user.id}&Policy_Type=Code of Conduct`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => {
+          if (!res) {
+            throw Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then((resJSON) => {
+          if (resJSON.length !== 0) {
+            setCodeOfConduct(resJSON);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }, []);
+  }, [policy]);
+
+  useEffect(() => {
+    if (policy.length !== 0) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/employee-acknowledgements?user.id=${user.id}&Policy_Type=${policy[0].Policy_Name}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => {
+          if (!res) {
+            throw Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then((resJSON) => {
+          if (resJSON.length !== 0) {
+            setCodeOfConduct(resJSON);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  });
 
   // Download code of conduct pdf document
   const downoladFile = (url) => {
