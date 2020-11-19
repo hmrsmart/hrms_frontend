@@ -80,7 +80,7 @@ const LeaveRequest = (props) => {
           <Col lg={3}>
             <Card className="l-card-1 border-0 p-3 bg-success">
               <CardBody className="pb-0">
-                <CardTitle>Casual Leaves</CardTitle>
+                <CardTitle tag="h6">Casual Leaves</CardTitle>
                 <p className="mb-0">Utilized - 0</p>
                 <p className="mb-0">Total - 0</p>
               </CardBody>
@@ -89,7 +89,7 @@ const LeaveRequest = (props) => {
           <Col lg={3}>
             <Card className="l-card-2 border-0 p-3 bg-warning">
               <CardBody className="pb-0">
-                <CardTitle>Sick Leaves</CardTitle>
+                <CardTitle tag="h6">Sick Leaves</CardTitle>
                 <p className="mb-0">Utilized - 0</p>
                 <p className="mb-0">Total - 0</p>
               </CardBody>
@@ -98,7 +98,7 @@ const LeaveRequest = (props) => {
           <Col lg={3}>
             <Card className="l-card-3 border-0 p-3 bg-primary">
               <CardBody className="pb-0">
-                <CardTitle>Special Leaves</CardTitle>
+                <CardTitle tag="h6">Special Leaves</CardTitle>
                 <p className="mb-0">Utilized - 0</p>
                 <p className="mb-0">Total - 0</p>
               </CardBody>
@@ -107,7 +107,7 @@ const LeaveRequest = (props) => {
           <Col lg={3}>
             <Card className="l-card-4 border-0 p-3 bg-danger">
               <CardBody className="pb-0">
-                <CardTitle>Bereavement Leaves</CardTitle>
+                <CardTitle tag="h6">Bereavement Leaves</CardTitle>
                 <p className="mb-0">Utilized - 0</p>
                 <p className="mb-0">Total - 0</p>
               </CardBody>

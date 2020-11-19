@@ -100,7 +100,7 @@ function Home() {
 
   return (
     <Container fluid className="d-flex justify-conent-center flex-column">
-      <Container className="py-5">
+      <Container fluid className="py-5">
         <Row>
           <Col lg={8} className="py-3 profile-home">
             <Row>
@@ -152,7 +152,7 @@ function Home() {
               <Col lg={4}>
                 <Card className="card-2">
                   <CardBody>
-                    <CardTitle tag="h5">Next Public Holiday</CardTitle>
+                    <h5 className="text-center">Next Public Holiday</h5>
                   </CardBody>
 
                   <CardBody>
@@ -196,7 +196,7 @@ function Home() {
           </Col>
 
           <Col lg={4}>
-            <div className="h-100 cal-box">
+            <div className="h-100 cal-box d-flex justify-content-center">
               <Calendar className="rounded rounded-lg border-0 shadow shadow-sm" />
             </div>
           </Col>

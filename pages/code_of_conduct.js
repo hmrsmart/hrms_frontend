@@ -21,6 +21,7 @@ function CodeOfConduct() {
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
   const [codeOfConduct, setCodeOfConduct] = useState(null);
 
+  console.log(router.query.id);
   useEffect(() => {
     if (!appContext.isAuthenticated) {
       router.push("/login"); // redirect if user not logged in
