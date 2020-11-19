@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 // import Datetime from "react-datetime";
 import DataTable from "react-data-table-component";
 import moment from "moment";
-import { DateTimePicker } from "@material-ui/pickers";
+import { DateTimePicker, DatePicker } from "@material-ui/pickers";
 import {
   Container,
   Form,
@@ -272,7 +272,7 @@ const Grievances = () => {
                   autoComplete="off"
                   innerRef={register({ required: true })}
                 /> */}
-                <DateTimePicker
+                <DatePicker
                   value={selectedDate}
                   onChange={handleDateChange}
                   className="form-control px-3"
