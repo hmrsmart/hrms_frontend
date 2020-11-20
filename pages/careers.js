@@ -70,6 +70,7 @@ const Careers = () => {
       <Nav tabs className="py-4">
         <NavItem>
           <NavLink
+            className="btn btn-outline-info border border-info mx-3"
             onClick={() => {
               toggle("1");
             }}
@@ -79,6 +80,7 @@ const Careers = () => {
         </NavItem>
         <NavItem>
           <NavLink
+            className="btn btn-outline-info border border-info mx-3"
             onClick={() => {
               toggle("2");
             }}
@@ -88,6 +90,7 @@ const Careers = () => {
         </NavItem>
         <NavItem>
           <NavLink
+            className="btn btn-outline-info border border-info mx-3"
             onClick={() => {
               toggle("3");
             }}
