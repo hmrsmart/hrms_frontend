@@ -384,7 +384,7 @@ const Grievances = () => {
                       value="All"
                       innerRef={register({ required: true })}
                     />
-                    HR & Line Manager
+                    To Both
                   </Label>
                 </FormGroup>
               </FormGroup>
