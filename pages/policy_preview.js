@@ -19,13 +19,14 @@ function CodeOfConduct() {
     false
   );
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
-  const [codeOfConduct, setCodeOfConduct] = useState(null);
+  const [codeOfConduct, setCodeOfConduct] = useState([]);
   const [policy, setPolicy] = useState([]);
-
+  const [reRender, setReRender] = useState(false);
   useEffect(() => {
     if (!appContext.isAuthenticated) {
       router.push("/login"); // redirect if user not logged in
     }
+
     if (token && user) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/policies/${router.query.id}`, {
         headers: {
@@ -39,64 +40,36 @@ function CodeOfConduct() {
           return res.json();
         })
         .then((resJSON) => {
-          console.log(resJSON);
           setPolicy([resJSON]);
+          return resJSON;
         })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/employee-acknowledgements?user.id=${user.id}&Policy_Type=Code of Conduct`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-        .then((res) => {
-          if (!res) {
-            throw Error(res.statusText);
-          }
-          return res.json();
-        })
-        .then((resJSON) => {
-          if (resJSON.length !== 0) {
-            setCodeOfConduct(resJSON);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [policy]);
-
-  useEffect(() => {
-    if (policy.length !== 0) {
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/employee-acknowledgements?user.id=${user.id}&Policy_Type=${policy[0].Policy_Name}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-        .then((res) => {
-          if (!res) {
-            throw Error(res.statusText);
-          }
-          return res.json();
-        })
-        .then((resJSON) => {
-          if (resJSON.length !== 0) {
-            setCodeOfConduct(resJSON);
-          }
+        .then((policyRes) => {
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/employee-acknowledgements?user.id=${user.id}&Policy_Type=${policyRes.Policy_Name}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+            .then((res) => {
+              if (!res) {
+                throw Error(res.statusText);
+              }
+              return res.json();
+            })
+            .then((resJSON) => {
+              setCodeOfConduct(resJSON);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  });
+  }, [reRender]);
 
   // Download code of conduct pdf document
   const downoladFile = (url) => {
@@ -170,7 +143,7 @@ function CodeOfConduct() {
           </div>
 
           {/* Acknowledgement form */}
-          {codeOfConduct ? (
+          {codeOfConduct.length !== 0 ? (
             <div className="container px-md-5 py-3">
               <p className="text-center">
                 You have acknowledged {policy[0].Policy_Name} policy on{" "}
