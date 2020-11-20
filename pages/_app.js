@@ -105,7 +105,7 @@ class MyApp extends App {
             />
             <script
               src="https://kit.fontawesome.com/f3f3fd1f55.js"
-              crossorigin="anonymous"
+              crossOrigin="anonymous"
             ></script>
             <link
               href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
