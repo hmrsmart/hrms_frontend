@@ -20,6 +20,7 @@ import {
   faDownload,
   faBriefcase,
   faAddressBook,
+  faPencilAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import Layout from "../components/Layout";
 import AppContext from "../context/AppContext";
@@ -44,7 +45,8 @@ library.add(
   faFileSignature,
   faDownload,
   faBriefcase,
-  faAddressBook
+  faAddressBook,
+  faPencilAlt
 );
 class MyApp extends App {
   state = {

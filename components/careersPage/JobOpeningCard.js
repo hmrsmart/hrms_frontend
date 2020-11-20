@@ -15,7 +15,7 @@ import {
   FormGroup,
   Label,
 } from "reactstrap";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookie from "js-cookie";
 import { useForm, Controller } from "react-hook-form";
 import AppContext from "../../context/AppContext";
@@ -150,8 +150,15 @@ const JobApplicantCard = ({ data }) => {
       button: true,
       cell: (row) => {
         return (
-          <button type="button" onClick={() => getSelectedRow(row)}>
-            Edit
+          <button
+            className="btn btn-light py-0"
+            type="button"
+            onClick={() => getSelectedRow(row)}
+          >
+            <FontAwesomeIcon
+              icon={["fas", "pencil-alt"]}
+              className="text-info"
+            />
           </button>
         );
       },
