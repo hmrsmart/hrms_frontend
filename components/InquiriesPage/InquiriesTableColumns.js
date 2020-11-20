@@ -13,13 +13,13 @@ const columns = [
     format: (row) => moment(row.Date).format("MMMM DD YYYY"),
   },
   {
-    name: "Email",
-    selector: "Email",
+    name: "Interested In",
+    selector: "Interested",
     sortable: true,
   },
   {
-    name: "Phone",
-    selector: "Phone",
+    name: "Country",
+    selector: "Country",
     sortable: true,
   },
 ];

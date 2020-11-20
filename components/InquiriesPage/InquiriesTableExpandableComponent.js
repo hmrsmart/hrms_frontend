@@ -6,6 +6,14 @@ const InquiriesTableExpandableComponent = ({ data }) => {
     <Container>
       <div className="py-2">
         <p className="text-muted">
+          <small>Country</small>{" "}
+          <span className="text-dark ml-3">{data.Country}</span>
+        </p>
+        <p className="text-muted">
+          <small>Email</small>
+          <span className="text-dark ml-3">{data.Email}</span>
+        </p>
+        <p className="text-muted">
           <small>Message</small>
         </p>
         <p>

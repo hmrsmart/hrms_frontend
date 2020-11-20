@@ -42,6 +42,7 @@ const Inquiries = () => {
       .then((resJSON) => {
         setInquiriesData(resJSON);
         setIsError(false);
+        console.log(resJSON);
       })
       .catch((error) => {
         setIsError(true);
@@ -54,14 +55,14 @@ const Inquiries = () => {
       {isError && (
         <Container className="py-2">
           <UncontrolledAlert color="danger">
-            {errorMessage},<span className="mx-2"> try again</span>
+            {errorMessage},<span className="mx-2"> Try again</span>
           </UncontrolledAlert>
         </Container>
       )}
       <Container className="py-3">
         {inquiriesData && (
           <DataTable
-            title="Business Inquiries"
+            title="Inquiries from Website"
             striped
             highlightOnHover
             pointerOnHover
