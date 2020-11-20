@@ -52,7 +52,7 @@ const RequestLeave = () => {
 
   return (
     <div className="container p-4">
-      <h3 className="text-center mt-md-3">New Leave Request</h3>
+      <h3 className="text-center mt-md-3 title-text">New Leave Request</h3>
       <div className="row d-flex justify-content-center mt-md-5">
         <div className="col-6">
           <form className="task-form" onSubmit={handleSubmit(onSubmit)}>

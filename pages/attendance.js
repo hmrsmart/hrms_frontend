@@ -4,6 +4,55 @@ import { useRouter } from "next/router";
 import { withRouter } from "next/router";
 
 import AppContext from "../context/AppContext";
+import moment from "moment";
+import DataTable, { createTheme } from "react-data-table-component";
+
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
+
+const columns = [
+  {
+    name: "Date",
+    selector: "Date",
+    format: (row) => moment(row.Date).format("MMMM DD YYYY"),
+    sortable: true,
+  },
+  {
+    name: "Action",
+    selector: "Action",
+    sortable: true,
+  },
+  {
+    name: "Time",
+    selector: "Time",
+    sortable: true,
+  },
+  {
+    name: "Status",
+    selector: "Status",
+    sortable: true,
+  },
+  {
+    name: "Notes",
+    selector: "Notes",
+    sortable: true,
+  },
+];
 
 import {
   getClockTime,
@@ -477,8 +526,9 @@ class Attendance extends React.Component {
         </div>
 
         <div className="py-5">
-          <h4 className="py-4">Attendance Logs</h4>
-          <table className="table table-striped">
+          <h4 className="py-4 title-text-2">Attendance Logs</h4>
+
+          {/* <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">SNO</th>
@@ -504,7 +554,20 @@ class Attendance extends React.Component {
                   );
                 })}
             </tbody>
-          </table>
+          </table> */}
+          {tasks.length !== 0 && (
+            <DataTable
+              noHeader
+              striped
+              highlightOnHover
+              pointerOnHover
+              pagination
+              paginationPerPage={20}
+              columns={columns}
+              data={tasks}
+              theme="solarized"
+            />
+          )}
         </div>
       </div>
     );

@@ -16,9 +16,7 @@ const InquiriesTableExpandableComponent = ({ data }) => {
         <p className="text-muted">
           <small>Message</small>
         </p>
-        <p>
-          <small>{data.Message}</small>
-        </p>
+        <p className="text-grey">{data.Message}</p>
       </div>
       <p>
         <small className="text-muted">

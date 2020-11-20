@@ -53,10 +53,10 @@ function Policies() {
                     query: { id: policy.id },
                   }}
                 >
-                  <a>
+                  <a className="text-info">
                     <FontAwesomeIcon
                       icon={["fas", "file-signature"]}
-                      className="mr-2 text-primary"
+                      className="mr-2 text-info"
                     />
                     {policy.Policy_Name}
                   </a>

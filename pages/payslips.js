@@ -3,10 +3,30 @@ import Cookie from "js-cookie";
 import { Spinner } from "reactstrap";
 import { useRouter } from "next/router";
 import FileSaver from "file-saver";
+import { Container, Row, Col } from "reactstrap";
+import DataTable, { createTheme } from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppContext from "../context/AppContext";
 import { getDay } from "../lib/date";
+import PayslipsTableColumn from "../components/PayslipsPage/PayslipsTableColumn";
 
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
 // TODO : Refactor code
 
 const Payslips = () => {
@@ -44,16 +64,11 @@ const Payslips = () => {
     }
   }, [user]);
 
-  const downoladFile = (event) => {
-    event.preventDefault();
-    FileSaver.saveAs(event.target.href, event.target.name);
-  };
-
   return (
     <div className="container-fluid d-flex justify-conent-center flex-column">
-      <h3 className="py-3 title-text">Pay Slips</h3>
+      <h3 className="py-3 title-text text-center">Pay Slips</h3>
       <div className="container">
-        <table className="table table-striped">
+        {/* <table className="table table-striped">
           <thead className="bg-success text-dark">
             <tr>
               <th scope="col">SNO</th>
@@ -104,8 +119,27 @@ const Payslips = () => {
                   </tr>
                 )}
           </tbody>
-        </table>
+        </table> */}
+        <Container className="py-3">
+          <Row className="d-flex justify-content-center">
+            <Col lg={7} md={8}>
+              {payslips.length !== 0 && (
+                <DataTable
+                  noHeader
+                  striped
+                  highlightOnHover
+                  pointerOnHover
+                  pagination
+                  columns={PayslipsTableColumn}
+                  data={payslips}
+                  theme="solarized"
+                />
+              )}
+            </Col>
+          </Row>
+        </Container>
       </div>
+
       <style jsx>
         {`
           td {

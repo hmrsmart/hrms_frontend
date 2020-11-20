@@ -65,7 +65,7 @@ const Profile = () => {
 
   return (
     <div className="container-fluid d-flex justify-conent-center flex-column">
-      <h3 className="py-md-4">My Profile</h3>
+      <h3 className="py-md-4 title-text">My Profile</h3>
       {isLoading && (
         <div className="py-3">
           <p className="text-center">Loading . . .</p>

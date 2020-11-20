@@ -5,6 +5,24 @@ import { Container } from "reactstrap";
 import FileSaver from "file-saver";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
+
 const downoladFile = (url, name) => {
   FileSaver.saveAs(url, name);
 };
@@ -51,7 +69,7 @@ const columns = [
         >
           <FontAwesomeIcon
             icon={["fas", "download"]}
-            className="mr-2 text-dark"
+            className="mr-2 text-success"
           />
         </button>
       ) : (
@@ -92,7 +110,7 @@ const JobApplicantCard = ({ data }) => {
     <Container className="py-3">
       {data && (
         <DataTable
-          title="Job Applications"
+          noHeader
           striped
           highlightOnHover
           pointerOnHover

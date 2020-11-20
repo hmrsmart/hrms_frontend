@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 // import Datetime from "react-datetime";
-import DataTable from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
 import moment from "moment";
 import { DateTimePicker, DatePicker } from "@material-ui/pickers";
 import {
@@ -18,6 +18,24 @@ import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 // TODO : Refactor code
+
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
 
 const columns = [
   {
@@ -87,6 +105,7 @@ const GrievanceRecordCard = ({ data }) => {
           expandableRows
           expandOnRowClicked
           expandableRowsComponent={<ExpandableComponent />}
+          theme="solarized"
         />
       )}
     </Container>

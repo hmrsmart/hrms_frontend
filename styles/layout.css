@@ -76,5 +76,20 @@
   background-color: orange;
 }
 .card-2 {
-  background-color: lightgreen;
+  background-color: #90ee90;
+}
+.rdt_TableHead {
+  background-color: hsl(40, 82%, 89%) !important;
+}
+.rdt_TableHeader {
+  background-color: #f6f7fa !important;
+}
+.rdt_Table {
+  font-size: 1rem !important;
+}
+.rdt_TableRow {
+  background-color: #fafafa !important;
+}
+.rdt_Pagination {
+  background-color: #f4f4f4 !important;
 }

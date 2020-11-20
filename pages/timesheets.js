@@ -5,7 +5,71 @@ import { useForm } from "react-hook-form";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
+import moment from "moment";
+import DataTable, { createTheme } from "react-data-table-component";
 
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
+
+const columns = [
+  {
+    name: "Date",
+    selector: "Date",
+    format: (row) => moment(row.Date).format("MMMM DD YYYY"),
+    sortable: true,
+  },
+  {
+    name: "Task",
+    selector: "Task",
+    sortable: true,
+  },
+  {
+    name: "ETA",
+    selector: "Time_Est",
+    sortable: true,
+  },
+  {
+    name: "Status",
+    selector: "Status",
+    sortable: true,
+  },
+  {
+    name: "Priority",
+    selector: "Priority",
+    sortable: true,
+  },
+  {
+    name: "Due Date",
+    selector: "Due_Date",
+    format: (row) => moment(row.Due_Date).format("MMMM DD YYYY"),
+    sortable: true,
+  },
+  {
+    name: "Project",
+    selector: "Project",
+    sortable: true,
+  },
+  {
+    name: "Remarks",
+    selector: "Remarks",
+    sortable: true,
+  },
+];
 const Timesheet = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -46,13 +110,13 @@ const Timesheet = () => {
 
   return (
     <div className="container-fluid d-flex justify-conent-center flex-column">
-      <h2 className="py-3">Timesheet</h2>
+      <h2 className="py-3 title-text">Timesheet</h2>
       <div className="d-flex py-3">
         <Link href="/add-task">
           <a className="ml-auto btn btn-primary">Add New Task</a>
         </Link>
       </div>
-      <table className="table table-striped">
+      {/* <table className="table table-striped">
         <thead>
           <tr>
             <th scope="col">SNO</th>
@@ -99,7 +163,20 @@ const Timesheet = () => {
                 </tr>
               )}
         </tbody>
-      </table>
+      </table> */}
+      {tasks.length !== 0 && (
+        <DataTable
+          noHeader
+          striped
+          highlightOnHover
+          pointerOnHover
+          pagination
+          paginationPerPage={20}
+          columns={columns}
+          data={tasks}
+          theme="solarized"
+        />
+      )}
     </div>
   );
 };

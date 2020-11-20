@@ -1,11 +1,29 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Container, UncontrolledAlert } from "reactstrap";
-import DataTable from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 import InquiriesTableColumns from "../components/InquiriesPage/InquiriesTableColumns";
 import InquiriesTableExpandableComponent from "../components/InquiriesPage/InquiriesTableExpandableComponent";
+
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
 
 const Inquiries = () => {
   const token = Cookie.get("token");
@@ -72,6 +90,7 @@ const Inquiries = () => {
             expandableRows
             expandOnRowClicked
             expandableRowsComponent={<InquiriesTableExpandableComponent />}
+            theme="solarized"
           />
         )}
       </Container>

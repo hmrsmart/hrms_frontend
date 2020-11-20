@@ -4,7 +4,45 @@ import { Spinner } from "reactstrap";
 import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 import { getDay } from "../lib/date";
+import moment from "moment";
+import DataTable, { createTheme } from "react-data-table-component";
 
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
+
+const columns = [
+  {
+    name: "Date",
+    selector: "Date",
+    format: (row) => moment(row.Date).format("dddd, MMMM Do YYYY"),
+    sortable: true,
+  },
+  {
+    name: "Occasion",
+    selector: "Occasion",
+    sortable: true,
+  },
+  {
+    name: "Holiday_Type",
+    selector: "Holiday_Type",
+    sortable: true,
+  },
+];
 const Holidays = () => {
   const [holidays, setHolidays] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -44,7 +82,7 @@ const Holidays = () => {
     <div className="container-fluid d-flex justify-conent-center flex-column">
       <h2 className="py-3 title-text">Holidays List</h2>
 
-      <table className="table">
+      {/* <table className="table">
         <thead>
           <tr>
             <th scope="col">SNO</th>
@@ -80,7 +118,21 @@ const Holidays = () => {
               );
             })}
         </tbody>
-      </table>
+      </table> */}
+
+      {holidays.length !== 0 && (
+        <DataTable
+          noHeader
+          striped
+          highlightOnHover
+          pointerOnHover
+          pagination
+          paginationPerPage={20}
+          columns={columns}
+          data={holidays}
+          theme="solarized"
+        />
+      )}
       <style jsx>
         {`
           th {

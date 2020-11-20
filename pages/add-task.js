@@ -53,7 +53,7 @@ const AddTask = () => {
           </a>
         </Link>
       </div>
-      <h3 className="text-center">Add New Task</h3>
+      <h3 className="text-center title-text">Add New Task</h3>
       <div className="row d-flex justify-content-center">
         <div className="col-7">
           <form className="task-form" onSubmit={handleSubmit(onSubmit)}>

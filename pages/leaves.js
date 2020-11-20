@@ -12,9 +12,62 @@ import {
   CardBody,
   CardTitle,
 } from "reactstrap";
-// import DataTable from "react-data-table-component";
-// import moment from "moment";
+import moment from "moment";
+import DataTable, { createTheme } from "react-data-table-component";
 
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
+
+const columns = [
+  {
+    name: "Request Date",
+    selector: "Applied_Date",
+    format: (row) => moment(row.Applied_Date).format("MMMM DD YYYY"),
+    sortable: true,
+  },
+  {
+    name: "Leave Type",
+    selector: "Leave_Type",
+    sortable: true,
+  },
+  {
+    name: "From Date",
+    selector: "Form_Date",
+    format: (row) => moment(row.Form_Date).format("MMMM DD YYYY"),
+    sortable: true,
+  },
+  {
+    name: "To Date",
+    selector: "To_Date",
+    format: (row) => moment(row.To_Date).format("MMMM DD YYYY"),
+    sortable: true,
+  },
+  {
+    name: "Approval",
+    selector: "Approval",
+    sortable: true,
+  },
+  {
+    name: "Message",
+    selector: "Message",
+    sortable: true,
+  },
+];
 const LeaveRequest = (props) => {
   const [leaves, setLeaves] = useState([]);
   const [balance, setBalance] = useState([]);
@@ -43,7 +96,7 @@ const LeaveRequest = (props) => {
           return res.json();
         })
         .then((data) => {
-          data.length !== 0 && setLeaves(data);
+          setLeaves(data);
           setLoading(false);
         })
         .catch((error) => {
@@ -75,7 +128,7 @@ const LeaveRequest = (props) => {
 
   return (
     <div className="container-fluid d-flex justify-conent-center flex-column">
-      <Container className="py-5">
+      {/* <Container className="py-5">
         <Row>
           <Col lg={3}>
             <Card className="l-card-1 border-0 p-3 bg-success">
@@ -114,15 +167,15 @@ const LeaveRequest = (props) => {
             </Card>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
 
-      <h2 className="py-3">Leave Requests</h2>
+      <h2 className="py-3 title-text">Leave Requests</h2>
       <div className="d-flex py-3">
         <Link href="/leave-request">
           <a className="ml-auto btn btn-primary">Request Leave</a>
         </Link>
       </div>
-      <table className="table table-striped">
+      {/* <table className="table table-striped">
         <thead>
           <tr>
             <th scope="col">SNO</th>
@@ -164,7 +217,19 @@ const LeaveRequest = (props) => {
                 </tr>
               )}
         </tbody>
-      </table>
+      </table> */}
+      {leaves.length !== 0 && (
+        <DataTable
+          noHeader
+          striped
+          highlightOnHover
+          pointerOnHover
+          pagination
+          columns={columns}
+          data={leaves}
+          theme="solarized"
+        />
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import moment from "moment";
-import DataTable from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
 import {
   Container,
   Button,
@@ -19,6 +19,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookie from "js-cookie";
 import { useForm, Controller } from "react-hook-form";
 import AppContext from "../../context/AppContext";
+
+createTheme("solarized", {
+  text: {
+    primary: "#111b33",
+    secondary: "#2aa198",
+    fontSize: "0.9rem",
+  },
+  background: {
+    default: "#faebcc",
+  },
+  context: {
+    background: "#cb4b16",
+    text: "#FFFFFF",
+  },
+  divider: {
+    default: "#faebcc",
+  },
+});
 
 const ExpandableComponent = ({ data }) => {
   return (
@@ -360,6 +378,7 @@ const JobApplicantCard = ({ data }) => {
 
       {data && (
         <DataTable
+          noHeader
           title="Open Positions"
           striped
           highlightOnHover
@@ -370,6 +389,7 @@ const JobApplicantCard = ({ data }) => {
           expandableRows
           expandOnRowClicked
           expandableRowsComponent={<ExpandableComponent />}
+          theme="solarized"
         />
       )}
     </Container>
